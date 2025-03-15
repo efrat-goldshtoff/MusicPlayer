@@ -19,7 +19,7 @@ builder.Services.AddScoped<IUserService, SongService>();
 builder.Services.AddScoped<ISingerService, UserService>();
 builder.Services.AddScoped<ISongtService, SingerService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<SongRepository, SongRepository>();
+//builder.Services.AddScoped<SongRepository, SongRepository>();
 builder.Services.AddScoped<ISingerRepository, SingerRepository>();
 
 builder.Services.AddDbContext<DataContext>();
