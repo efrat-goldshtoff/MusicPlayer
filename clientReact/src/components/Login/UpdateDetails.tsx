@@ -42,6 +42,8 @@ const UpdateDetails = ({ setUpdate }: { setUpdate: Function }) => {
                 },
                 { headers: { 'user-id': context?.user.id } }
             )
+            console.log(result);
+            
             context?.userDispatch({
                 type: 'UPDATE',
                 data: {

@@ -1,5 +1,5 @@
-import { useContext } from "react"
-import { UserContext } from "../Login/UserContext"
+// import { useContext } from "react"
+// import { UserContext } from "../Login/UserContext"
 import { Link } from "react-router-dom";
 
 const style = {
@@ -8,7 +8,7 @@ const style = {
 }
 
 const NavBar=()=>{
-    const context=useContext(UserContext);
+    // const context=useContext(UserContext);
     return (<>
     <nav style={{position:'fixed',top:'5px',right:'50px'}}>
         <Link to='/'

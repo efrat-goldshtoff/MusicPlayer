@@ -1,19 +1,19 @@
 import { useState } from "react";
-import { UserType } from "../Login/User";
+// import { UserType } from "../Login/User";
 import { Box, Button } from "@mui/material";
 import Login from "../Login/Login";
 import AvatarUser from "../Login/AvatarUser";
 
 const HomePage = () => {
-    const initUser: UserType = {
-        id: '',
-        firstName: '',
-        lastName: '',
-        address: '',
-        email: '',
-        password: '',
-        phone: ''
-    }
+    // const initUser: UserType = {
+    //     id: '',
+    //     firstName: '',
+    //     lastName: '',
+    //     address: '',
+    //     email: '',
+    //     password: '',
+    //     phone: ''
+    // }
 
     const [isLogin, setIsLogin] = useState(false);
     const [isOpen, setIsOpen] = useState(false);

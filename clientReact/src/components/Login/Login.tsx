@@ -48,6 +48,8 @@ const Login = ({ successLogin, typeAction, close }:
                 });
                 setOpen(false);
                 successLogin();
+                console.log(userId);
+                
             }
             else if (typeAction === 'Login') {
                 const result = await axios.post(UrlApiLogin,
