@@ -1,5 +1,5 @@
-// import { useContext } from "react"
-// import { UserContext } from "../Login/UserContext"
+import { useContext } from "react"
+import { UserContext } from "../Login/UserContext"
 import { Link } from "react-router-dom";
 
 const style = {
@@ -7,16 +7,21 @@ const style = {
     color: 'purple'
 }
 
-const NavBar=()=>{
-    // const context=useContext(UserContext);
+const NavBar = () => {
+    const context = useContext(UserContext);
     return (<>
-    <nav style={{position:'fixed',top:'5px',right:'50px'}}>
-        <Link to='/'
-        style={style}>
-            Home
-        </Link>
-    </nav>
-    
+        <nav style={{ position: 'fixed', top: '5px', right: '50px' }}>
+            <Link to='/'
+                style={style}>
+                Home
+            </Link>
+            {/* {context?.user && context.user.id && ( */}
+                <Link to='/allSongs'>
+                    mySongs
+                </Link>
+            {/* )} */}
+        </nav>
+
     </>)
 }
 export default NavBar;
