@@ -1,6 +1,6 @@
 import { Box, Button, Modal, TextField } from "@mui/material";
-import { FormEvent, useContext, useRef, useState } from "react";
-import { UserContext } from "../Login/UserContext";
+import { FormEvent, useRef, useState } from "react";
+// import { UserContext } from "../Login/UserContext";
 
 
 const style = {
@@ -18,12 +18,12 @@ const style = {
 const AddSong = ({ successAdding, close, addSong }:
     { successAdding: Function; close: Function, addSong: Function }) => {
 
-    const context = useContext(UserContext);
+    // const context = useContext(UserContext);
     const nameRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
 
     const [open, setOpen] = useState(true);
-    const [userId, setUserId] = useState<string>();
+    // const [userId, setUserId] = useState<string>();
 
     const handleSubmitAddSong = async (e: FormEvent) => {
         e.preventDefault();
