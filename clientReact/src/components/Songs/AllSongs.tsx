@@ -1,43 +1,83 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
+import { useState } from "react";
+import AddSong from "./AddSong";
+import { Song } from "./Song";
 // import { Song } from "./Song";
 // import axios from "axios";
 
 const AllSongs = () => {
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4
+    }
+
     // const ApiUrl='';
     // const songs=await axios.get(ApiUrl)
+    const [isOpen, setIsOpen] = useState(false);
+    const [isAdd, setIsAdd] = useState(false);
     const songs = [
         {
             id: "1",
-            name: "Ilan",
+            name: "Acheinu",
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.1&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo8vz80&zw"
         },
         {
             id: "2",
-            name: "Tov",
+            name: "Simcha",
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.3&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9b1&zw"
         },
         {
             id: "3",
-            name: "Shabat",
+            name: "Tov",
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.2&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9h2&zw"
         }, {
             id: '4',
-            name: 'Tami',
+            name: 'Zanvil',
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.4&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9k3&zw"
         },
         {
             id: "3",
-            name: "Shabat",
+            name: "Tov",
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.2&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9h2&zw"
         }, {
             id: '4',
-            name: 'Tami',
+            name: 'Zanvil',
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.4&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9k3&zw"
         }
     ]
 
+    const setSongs = (song: Song) => {
+        songs.push(song);
+    }
+
+    const handleSuccessAddSong = () => {
+        setIsAdd((now1) => {
+            if (!now1)
+                setIsOpen(false);
+            return now1;
+        })
+    }
+
     return (<>
-        <div style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
+        <div
+            style={{
+                padding: '20px',
+                backgroundColor: '#f5f5f5',
+                borderRadius: '15px'
+            }}>
+            <header style={{
+                fontWeight: 'bold',
+                fontSize: '15px'
+            }}>My Songs
+            </header>
             <Box
                 display="flex"
                 flexDirection="column"
@@ -47,7 +87,7 @@ const AllSongs = () => {
                     overflowY: 'auto',
                     padding: '10px',
                     border: '1px solid #ccc',
-                    borderRadius: '10px',
+                    borderRadius: '15px',
                     backgroundColor: '#fff'
                 }}
             >
@@ -55,8 +95,8 @@ const AllSongs = () => {
                     <Card key={index}
                         sx={{
                             minHeight: 130,
-                            maxWidth: 350,
-                            borderRadius: '10px'
+                            // maxWidth: 350,
+                            borderRadius: '15px'
                         }}>
                         <CardContent>
                             <Typography variant="h6" gutterBottom>
@@ -77,105 +117,21 @@ const AllSongs = () => {
                     </Card>
                 ))}
             </Box>
-        </div>
-        <Button variant="contained" color="secondary" sx={{ mx: 2 }}>
-            Add Song
-        </Button>
-        {/* <div style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
-            <Stack
-                direction="row"
-                spacing={3}
-                flexWrap="wrap"
-                justifyContent="flex-start"
-            >
-                {songs.map((song, index) => (
-                    <Card key={index} sx={{ maxWidth: 345, borderRadius: '10px' }}>
-                        <CardContent>
-                            <Typography variant="h6" gutterBottom>
-                                {song.name}
-                            </Typography>
-                            <audio controls style={{ width: '100%' }}>
-                                <source src={song.link} type="audio/mp3" />
-                                Your browser does not support the audio element.
-                            </audio>
-                        </CardContent>
-                    </Card>
-                ))}
-            </Stack>
-        </div>
-        <Button variant="contained" color="secondary" sx={{ mx: 2 }}>
-            Add Song
-        </Button> */}
-        {/* <div style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
-                <Box 
-                    display="flex" 
-                    flexWrap="wrap" 
-                    justifyContent="space-between" 
-                    gap="16px"
-                >
-                    {songs.map((song, index) => (
-                        <Box key={index} sx={{ maxWidth: 345, borderRadius: '10px' }}>
-                            <Card sx={{ maxWidth: 345, borderRadius: '10px' }}>
-                                <CardContent>
-                                    <Typography variant="h6" gutterBottom>
-                                        {song.name}
-                                    </Typography>
-                                    <audio controls style={{ width: '100%' }}>
-                                        <source src={song.link} type="audio/mp3" />
-                                        Your browser does not support the audio element.
-                                    </audio>
-                                </CardContent>
-                            </Card>
-                        </Box>
-                    ))}
-                </Box>
-            </div>
-            <Button variant="contained" color="secondary" sx={{ mx: 2 }}>
+            <Button
+                variant="contained"
+                color="secondary"
+                sx={{ mx: 2 }}
+                onClick={() => setIsOpen(true)}>
                 Add Song
-            </Button> */}
-        {/* <div style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
-            <Grid2 container spacing={3}>
-                {songs.map((song, index) => (
-                    <Grid2 component="div" item xs={12} sm={6} md={4} key={index} sx={{ maxWidth: 345, borderRadius: '10px' }}>
-                        <Card sx={{ maxWidth: 345, borderRadius: '10px' }}>
-                            <CardContent>
-                                <Typography variant="h6" gutterBottom>
-                                    {song.name}
-                                </Typography>
-                                <audio controls style={{ width: '100%' }}>
-                                    <source src={song.link} type="audio/mp3" />
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </CardContent>
-                        </Card>
+            </Button></div>
 
-                    </Grid2>
-                ))}
-            </Grid2>
-        </div>
-        <Button variant="contained"
-            color="secondary"
-            sx={{ mx: 2 }}>
-            Add Song
-        </Button> */}
-        {/* <div >
-            {songs.map((song, index) => {
-                return (
-                    <div key={index}>
-                        <label>{song.name}</label>
-                        <audio controls>
-                            <source src={song.link} type="audio/mp3" />
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                )
-            })}
-        </div>
-        <Button variant="contained"
-            color="secondary"
-            sx={{ mx: 2 }}>
-            Add Song
-        </Button> */}
+        {isOpen &&
+            <AddSong
+                successAdding={handleSuccessAddSong}
+                close={() => setIsOpen(false)}
+                addSong={() => setSongs({})}
+            />
+        }
     </>)
 }
 

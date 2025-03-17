@@ -17,7 +17,7 @@ const NavBar = () => {
             </Link>
             {/* {context?.user && context.user.id && ( */}
                 <Link to='/allSongs'>
-                    mySongs
+                    MySongs
                 </Link>
             {/* )} */}
         </nav>
