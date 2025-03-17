@@ -3,45 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Courses.Core.DTOs;
 using Courses.Core.models;
 using Courses.Core.Repositories;
 using Courses.Core.Services;
 
 namespace Courses.Service
 {
-    public class SingerService : ISongtService
+    public class SingerService : ISingerService
     {
-        private readonly ISingerRepository _courseRepository;
-        public SingerService(ISingerRepository courseRepository)
+        private readonly ISingerRepository _singerRepository;
+        private readonly IMapper _mapper;
+
+        public SingerService(ISingerRepository singerRepository, IMapper mapper)
         {
-            _courseRepository = courseRepository;
+            _singerRepository = singerRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<Singer>> GetAllAsync()
+        {
+            return await _singerRepository.GetAllasync();
+        }
+
+        public async Task<Singer> GetByIdAsync(int id)
+        {
+            return await _singerRepository.GetByIdAsync(id);
+
         }
 
 
-
-        public IEnumerable<User> GetList()
+        public async Task<Singer> AddAsync(SingerDto singer)
         {
-            return _courseRepository.GetList();
+            var singerMap = _mapper.Map<Singer>(singer);
+            return await _singerRepository.AddAsync(singerMap);
         }
 
-        public User GetById(int id)
+
+        public async Task<Singer> UpdateAsync(int id, SingerDto singer)
         {
-            return _courseRepository.GetById(id);
+            var singerMap = _mapper.Map<Singer>(singer);
+            return await _singerRepository.UpdateAsync(id, singerMap);
         }
 
-        public void Add(User student)
-        {
-            _courseRepository.Add(student);
-        }
+        public async Task DeleteAsync(int id) =>
+        await _singerRepository.DeleteAsync(id);
 
-        public void Update(int id, User student)
-        {
-            _courseRepository.Update(id, student);
-        }
-
-        public void UpdateStatus(int id, bool status)
-        {
-            _courseRepository.UpdateStatus(id, status);
-        }
     }
 }

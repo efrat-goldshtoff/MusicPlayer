@@ -1,4 +1,6 @@
-﻿using Courses.Core.models;
+﻿using AutoMapper;
+using Courses.Core.DTOs;
+using Courses.Core.models;
 using Courses.Core.Repositories;
 using Courses.Core.Services;
 using System;
@@ -9,36 +11,38 @@ using System.Threading.Tasks;
 
 namespace Courses.Service
 {
-    public class SongService : IUserService
+    public class SongService : ISongtService
     {
-        private readonly IUserRepository _courseRepository;
-        public SongService(IUserRepository courseRepository)
+        private readonly ISongRepository _songRepository;
+        private readonly IMapper _mapper;
+        public SongService(ISongRepository songRepository, IMapper mapper)
         {
-            _courseRepository = courseRepository;
+            _songRepository = songRepository;
+            _mapper = mapper;
+        }
+        public async Task<IEnumerable<Song>> GetAllAsync()
+        {
+            return await _songRepository.GetAllasync();
         }
 
-        public IEnumerable<Song> GetList()
+        public async Task<Song> GetByIdAsync(int id)
         {
-            return _courseRepository.GetList();
-        }
-        public Song GetById(int id)
-        {
-            return _courseRepository.GetById(id);
+            return await _songRepository.GetByIdAsync(id);
         }
 
-        public void Add(Song course)
+        public async Task<Song> AddAsync(SongDto song)
         {
-            _courseRepository.Add(course);
+            var songMap = _mapper.Map<Song>(song);
+            return await _songRepository.AddAsync(songMap);
         }
 
-        public void Update(int id, Song course)
+        public async Task<Song> UpdateAsync(int id, SongDto song)
         {
-            _courseRepository.Update(id, course);
+            var songMap = _mapper.Map<Song>(song);
+            return await _songRepository.UpdateAsync(id, songMap);
         }
 
-        public void UpdateStatus(int id, bool status)
-        {
-            _courseRepository.UpdateStatus(id, status);
-        }
+        public async Task DeleteAsync(int id) =>
+            await (_songRepository.DeleteAsync(id));
     }
 }

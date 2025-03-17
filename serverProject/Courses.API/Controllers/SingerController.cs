@@ -15,66 +15,51 @@ namespace Courses.API.Controllers
     [ApiController]
     public class SingerController : ControllerBase
     {
-        private readonly IUserService _context;
-        //private readonly Mapping _mapping;
-        private readonly IMapper _mapper;
-        public SingerController(IUserService context, IMapper mapper)
+        private readonly ISingerService _singerService;
+        public SingerController(ISingerService context)
         {
-            _context = context;
-            _mapper = mapper;
+            _singerService = context;
         }
         // GET: api/<CoursesController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<IEnumerable<Singer>> GetAll()
         {
-            var singers = _context.GetList();
-            var listDTO = _mapper.Map<IEnumerable<SongDto>>(singers);
-            return Ok(listDTO);
+            return await _singerService.GetAllAsync();
         }
 
         // GET api/<CoursesController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult<Singer>> GetById(int id)
         {
-            var value = _context.GetById(id);
-            var cDTO = _mapper.Map<SongDto>(value);
-            return Ok(cDTO);
+            var value = await _singerService.GetByIdAsync(id);
+            if (value == null)
+                return NotFound();
+            return value;
         }
 
         // POST api/<CoursesController>
         [HttpPost]
-        public void Post([FromBody] SingerPostModel value)
+        public async Task<ActionResult<Singer>> Post([FromBody] SingerDto value)
         {
-            var c = new Song
-            {
-                Subject = value.Subject,
-                CurrentCount = value.CurrentCount,
-                MaxCount = value.MaxCount,
-                GuideId = value.GuideId,
-                Day = value.Day
-            };
-            _context.Add(c);
+            var s = await _singerService.AddAsync(value);
+            return Ok(s);
         }
 
         // PUT api/<CoursesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] SingerPostModel value)
+        public async Task<IActionResult> Put(int id, [FromBody] SingerDto value)
         {
-            var c = new Song
-            {
-                Subject = value.Subject,
-                CurrentCount = value.CurrentCount,
-                MaxCount = value.MaxCount,
-                GuideId = value.GuideId,
-                Day = value.Day
-            };
-            _context.Update(id, c);
+            Singer s = await _singerService.UpdateAsync(id, value);
+            if (s == null)
+                return NotFound();
+            return Ok(s);
 
         }
-        [HttpPut]
-        public void Put(int id, bool status)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            _context.UpdateStatus(id, status);
+            await _singerService.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

@@ -15,52 +15,51 @@ namespace Courses.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ISongtService _context;
-        private readonly IMapper _mapper;
-        public UserController(ISongtService context, IMapper mappre)
+        private readonly IUserService _userService;
+        public UserController(IUserService context)
         {
-            _context = context;
-            _mapper = mappre;
-
+            _userService = context;
         }
         // GET: api/<StudentsController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            var studs = _context.GetList();
-            var listDTO = _mapper.Map<IEnumerable<UserDto>>(studs);
-            return Ok(listDTO);
+            return await _userService.GetAllAsync();
         }
 
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult<User>> GetById(int id)
         {
-            var value = _context.GetById(id);
-            var sDTO = _mapper.Map<UserDto>(value);
-            return Ok(sDTO);
+            User user = await _userService.GetByIdAsync(id);
+            if (user == null)
+                return NotFound();
+            return user;
         }
 
         // POST api/<StudentsController>
         [HttpPost]
-        public void Post([FromBody] UserPostModel value)
+        public async Task<ActionResult<User>> Post([FromBody] UserDto value)
         {
-            var s = new User { Name = value.Name };
-            _context.Add(s);
+            User user = await _userService.AddAsync(value);
+            return Ok(user);
         }
 
         // PUT api/<StudentsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] UserPostModel value)
+        public async Task<IActionResult> Put(int id, [FromBody] UserDto value)
         {
-            var s = new User { Name = value.Name };
-            _context.Update(id, s);
+            User user = await _userService.UpdateAsync(id, value);
+            if (user == null)
+                return NotFound();
+            return Ok(user);
         }
         // PUT api/<StudentsController>/5
         [HttpPut]
-        public void Put(int id, bool status)
+        public async Task<IActionResult> Delete(int id)
         {
-            _context.UpdateStatus(id, status);
+            await _userService.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

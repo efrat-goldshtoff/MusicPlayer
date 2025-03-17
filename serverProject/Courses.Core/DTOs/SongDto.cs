@@ -9,12 +9,11 @@ namespace Courses.Core.DTOs
 {
     public class SongDto
     {
-        public int Id { get; set; }
-        public string Subject { get; set; }
-        public int MaxCount { get; set; }
-        public int CurrentCount { get; set; }
-        public EDayOfWeek Day { get; set; }
-        public bool Status { get; set; }
-        public int GuideId { get; set; }
+        public string Name { get; set; }
+        public string Genre { get; set; }
+        public TimeSpan Duration { get; set; }
+        public DateTime ReleaseDate { get; set; }
+        public string Link { get; set; }
+        public int SingerId { get; set; }
     }
 }

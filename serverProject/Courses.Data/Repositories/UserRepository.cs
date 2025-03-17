@@ -16,52 +16,49 @@ namespace Courses.Data.Repositories
         {
             _context = context;
         }
-        public IEnumerable<Song> GetList()
+
+        public async Task<IEnumerable<User>> GetAllasync()
         {
-            return _context.courses.Include(c=>c.guide);
+            return await _context.users.Include(u => u.songs).ToListAsync();
         }
 
-        public Song GetById(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            return _context.courses.Include(c=>c.guide).First(c=>c.Id== id);
+            return await _context.users.FindAsync(id);
         }
 
-        public Song Add(Song course)
+        public async Task<User> GEtByEmailAsync(string email)
         {
-            _context.courses.Add(course);
-            _context.SaveChanges();
-            return course;
+            return await _context.users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public void Update(int id, Song course)
+        public async Task<User> AddAsync(User user)
         {
-            Song c = GetById(id);
-            if (c == null)
-                return;
+            await _context.users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
+
+        public async Task<User> UpdateAsync(int id, User user)
+        {
+            User u = await _context.users.SingleOrDefaultAsync(a => a.Id == id);
+            if (u == null)
+                return null;
             else
             {
-                c.Subject = course.Subject;
-                c.Day = course.Day;
-                c.guide = new Singer();
-                c.guide.Id = course.guide.Id;
-                c.guide.Name= course.guide.Name;
-                c.guide.Courses = new List<Song>();
-                foreach (Song item in course.guide.Courses)
-                {
-                    c.guide.Courses.Add(item);
-                }
-                c.MaxCount = course.MaxCount;
-                c.CurrentCount = course.CurrentCount;
+                u.Name = user.Name;
+                u.Password = user.Password;
+                u.Email = user.Email;
+                u.Role = user.Role;
+                u.songs = user.songs;
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return u;
         }
 
-        public void UpdateStatus(int id, bool status)
+        public Task DeleteAsync(int id)
         {
-            Song c = GetById(id);
-            if (c != null)
-                c.Status = status;
-            _context.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }

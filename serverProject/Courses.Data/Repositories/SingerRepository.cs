@@ -16,48 +16,52 @@ namespace Courses.Data.Repositories
         {
             _context = context;
         }
-        public IEnumerable<User> GetList()
+        public async Task<IEnumerable<Singer>> GetAllasync()
         {
-            return _context.students.Include(s => s.Courses);
+            return await _context.singers.Include(s => s.songs).ToListAsync();
         }
 
-        public User GetById(int id)
+
+        public async Task<Singer> GetByIdAsync(int id)
         {
-            return _context.students.First(s => s.Id == id);
+            return await _context.singers.FindAsync(id);
         }
 
-        public User Add(User stud)
+        public async Task<Singer> GetByNameAsync(string name)
         {
-            _context.students.Add(stud);
-            _context.SaveChanges();
-            return stud;
+            return await _context.singers.FirstOrDefaultAsync(s => s.Name == name);
         }
 
-        public void Update(int id, User stud)
+        public async Task<Singer> AddAsync(Singer singer)
         {
-            User s = GetById(id);
+            await _context.singers.AddAsync(singer);
+            await _context.SaveChangesAsync();
+            return singer;
+        }
+
+
+        public async Task<Singer> UpdateAsync(int id, Singer singer)
+        {
+            Singer s = await _context.singers.SingleOrDefaultAsync(a => a.Id == id);
             if (s == null)
-                return;
+                return null;
             else
             {
-                s.Name = stud.Name;
-                s.IsActive = stud.IsActive;
-                s.Courses = new List<Song>();
-                foreach (Song course in stud.Courses)
-                {
-                    s.Courses.Add(course);
-                }
+                s.Name = singer.Name;
+                s.songs = singer.songs;
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return s;
         }
 
-        public void UpdateStatus(int id, bool status)
+        public async Task DeleteAsync(int id)
         {
-            User s = GetById(id);
-            if (s != null)
-                s.IsActive = status;
-            _context.SaveChanges();
+            var singer = await _context.singers.FindAsync(id);
+            if (singer != null)
+            {
+                _context.singers.Remove(singer);
+                await _context.SaveChangesAsync();
+            }
         }
-
     }
 }

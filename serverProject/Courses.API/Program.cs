@@ -15,16 +15,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddScoped<IUserService, SongService>();
-builder.Services.AddScoped<ISingerService, UserService>();
-builder.Services.AddScoped<ISongtService, SingerService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-//builder.Services.AddScoped<SongRepository, SongRepository>();
+builder.Services.AddScoped<ISingerService, SingerService>();
 builder.Services.AddScoped<ISingerRepository, SingerRepository>();
 
-builder.Services.AddDbContext<DataContext>();
-//builder.Services.AddSingleton<DataContext>();
+builder.Services.AddScoped<ISongtService, SongService>();
+builder.Services.AddScoped<ISongRepository, SongRepository>();
 
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddDbContext<DataContext>();
+
+builder.Services.AddControllers();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -32,9 +36,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.WriteIndented = true;
 });
 
-//builder.Services.AddSingleton<Mapping>();
-
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 

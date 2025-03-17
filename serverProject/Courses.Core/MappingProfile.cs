@@ -9,13 +9,13 @@ using Courses.Core.models;
 
 namespace Courses.Core
 {
-    public class MappingProfile:Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            CreateMap<Song,SongDto>().ReverseMap();
-            CreateMap<Singer,SingerDto>().ReverseMap();
-            CreateMap<User,UserDto>().ReverseMap();
+            CreateMap<Singer, SingerDto>().ReverseMap();
+            CreateMap<Song, SongDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
         }
     }
 }

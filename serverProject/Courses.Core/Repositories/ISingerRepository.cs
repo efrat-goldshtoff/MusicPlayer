@@ -9,10 +9,10 @@ namespace Courses.Core.Repositories
 {
     public interface ISingerRepository
     {
-        public IEnumerable<User> GetList();
-        public User GetById(int id);
-        public User Add(User student);
-        public void Update(int id, User student);
-        public void UpdateStatus(int id, bool status);
+        public Task<IEnumerable<Singer>> GetAllasync();
+        public Task<Singer> GetByIdAsync(int id);
+        public Task<Singer> AddAsync(Singer singer);
+        public Task<Singer> UpdateAsync(int id, Singer singer);
+        public Task DeleteAsync(int id);
     }
 }

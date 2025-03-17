@@ -15,53 +15,53 @@ namespace Courses.API.Controllers
     [ApiController]
     public class SongController : ControllerBase
     {
-        private readonly ISingerService _context;
-        //private readonly Mapping _mapping;
-        private readonly IMapper _mapper;
-        public SongController(ISingerService context,IMapper mapper)
+        private readonly ISongtService _songService;
+        public SongController(ISongtService context)
         {
-            _context = context;
-            _mapper = mapper;
+            _songService = context;
 
         }
         // GET: api/<GuiderController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<IEnumerable<Song>> GetAll()
         {
-            var guiders = _context.GetList();
-            var listDTO = _mapper.Map<IEnumerable<SingerDto>>(guiders);
-            return Ok(listDTO);
+            return await _songService.GetAllAsync();
         }
 
         // GET api/<GuiderController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult<Song>> GetById(int id)
         {
-            var value = _context.GetById(id);
-            var gDTO = _mapper.Map<SingerDto>(value);
-            return Ok(gDTO);
+            Song song = await _songService.GetByIdAsync(id);
+            if (song == null)
+                return NotFound();
+            return song;
         }
 
         // POST api/<GuiderController>
         [HttpPost]
-        public void Post([FromBody] SongPostModel value)
+        public async Task<ActionResult<Song>> Post([FromBody] SongDto value)
         {
-            var g = new Singer { Name = value.Name };
-            _context.Add(g);
+
+            Song s = await _songService.AddAsync(value);
+            return Ok(s);
         }
 
         // PUT api/<GuiderController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] SongPostModel guide)
+        public async Task<IActionResult> Put(int id, [FromBody] SongDto song)
         {
-            var g = new Singer { Name = guide.Name };
-            _context.Update(id, g);
+            Song s = await _songService.UpdateAsync(id, song);
+            if (s == null)
+                return NotFound();
+            return Ok(s);
         }
         // PUT api/<GuiderController>/5
-        [HttpPut]
-        public void Put(int id, bool status)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
         {
-            _context.UpdateStatus(id, status);
+            await _songService.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

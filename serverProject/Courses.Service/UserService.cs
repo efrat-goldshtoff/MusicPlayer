@@ -3,43 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Courses.Core.DTOs;
 using Courses.Core.models;
 using Courses.Core.Repositories;
 using Courses.Core.Services;
 
 namespace Courses.Service
 {
-    public class UserService:ISingerService
+    public class UserService : IUserService
     {
-        private readonly SongRepository _courseRepository;
-        public UserService(SongRepository courseRepository)
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
-            _courseRepository = courseRepository;
+            _userRepository = userRepository;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Singer> GetList()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return _courseRepository.GetList();
+            return await _userRepository.GetAllasync();
         }
 
-        public Singer? GetById(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            return _courseRepository.GetById(id);
+            return await _userRepository.GetByIdAsync(id);
         }
 
-        public void Add(Singer guide)
+        public async Task<User> AddAsync(UserDto user)
         {
-            _courseRepository.Add(guide);
+            var userMap = _mapper.Map<User>(user);
+            return await _userRepository.AddAsync(userMap);
         }
 
-        public void Update(int id, Singer guide)
+        public async Task<User> UpdateAsync(int id, UserDto user)
         {
-            _courseRepository.Update(id, guide);
+            var userMap = _mapper.Map<User>(user);
+            return await _userRepository.UpdateAsync(id, userMap);
         }
 
-        public void UpdateStatus(int id, bool status)
-        {
-            _courseRepository.UpdateStatus(id, status);
-        }
+        public async Task DeleteAsync(int id) =>
+            await _userRepository.DeleteAsync(id);
+
     }
 }

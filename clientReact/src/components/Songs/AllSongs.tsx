@@ -1,28 +1,28 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
-import { useState } from "react";
-import AddSong from "./AddSong";
-import { Song } from "./Song";
+// import { useState } from "react";
+// import AddSong from "./AddSong";
+// import { Song } from "./Song";
 // import { Song } from "./Song";
 // import axios from "axios";
 
-const AllSongs = () => {
 
-    // const style = {
-    //     position: 'absolute',
-    //     top: '50%',
-    //     left: '50%',
-    //     transform: 'translate(-50%,-50%)',
-    //     width: 400,
-    //     bgcolor: 'background.paper',
-    //     border: '2px solid #000',
-    //     boxShadow: 24,
-    //     p: 4
-    // }
+// const style = {
+//     position: 'absolute',
+//     top: '50%',
+//     left: '50%',
+//     transform: 'translate(-50%,-50%)',
+//     width: 400,
+//     bgcolor: 'background.paper',
+//     border: '2px solid #000',
+//     boxShadow: 24,
+//     p: 4
+// }
+const AllSongs = () => {
 
     // const ApiUrl='';
     // const songs=await axios.get(ApiUrl)
-    const [isOpen, setIsOpen] = useState(false);
-    const [, setIsAdd] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
+    // const [, setIsAdd] = useState(false);
 
     const songs = [
         {
@@ -55,17 +55,17 @@ const AllSongs = () => {
         }
     ]
 
-    const setSongs = (song: Song) => {
-        songs.push(song);
-    }
+    // const setSongs = (song: Song) => {
+    //     songs.push(song);
+    // }
 
-    const handleSuccessAddSong = () => {
-        setIsAdd((now1) => {
-            if (!now1)
-                setIsOpen(false);
-            return now1;
-        })
-    }
+    // const handleSuccessAddSong = () => {
+    //     setIsAdd((now1) => {
+    //         if (!now1)
+    //             setIsOpen(false);
+    //         return now1;
+    //     })
+    // }
 
     return (<>
         <div
@@ -118,20 +118,22 @@ const AllSongs = () => {
                     </Card>
                 ))}
             </Box>
-            <Button
+            {/* <Button
                 variant="contained"
                 color="secondary"
                 sx={{ mx: 2 }}
-                onClick={() => setIsOpen(true)}>
+            onClick={() => setIsOpen(true)}
+            >
                 Add Song
-            </Button></div>
+            </Button>*/}
+        </div>
 
-        {isOpen &&
+        {/* {isOpen &&
             <AddSong
                 successAdding={handleSuccessAddSong}
                 close={() => setIsOpen(false)}
                 addSong={() => setSongs}
-            />
+            />*/
         }
     </>)
 }

@@ -9,49 +9,65 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Courses.Data.Repositories
 {
-    public class SongRepository : Core.Repositories.SongRepository
+    public class SongRepository : ISongRepository
     {
         private readonly DataContext _context;
+
         public SongRepository(DataContext context)
         {
             _context = context;
         }
-        public IEnumerable<Singer> GetList()
+
+        public async Task<IEnumerable<Song>> GetAllasync()
         {
-            return _context.guiders.Include(g => g.Courses);
+            return await _context.songs.Include(s => s.Singer).Include(s => s.users).ToListAsync();
         }
 
-        public Singer GetById(int id)
+        public async Task<Song> GetByIdAsync(int id)
         {
-            return _context.guiders.First(g => g.Id == id);
+            return await _context.songs.FindAsync(id);
         }
 
-        public Singer Add(Singer guide)
+        public async Task<IEnumerable<Song>> GetSongByGenreAsync(string g)
         {
-            _context.guiders.Add(guide);
-            _context.SaveChanges();
-            return guide;
+            return await _context.songs.Where(s => s.Genre == g).ToListAsync();
         }
 
-        public void Update(int id, Singer guide)
+        public async Task<Song> AddAsync(Song song)
         {
-            Singer g = GetById(id);
-            if (g == null)
-                return;
+            await _context.songs.AddAsync(song);
+            await _context.SaveChangesAsync();
+            return song;
+        }
+
+        public async Task<Song> UpdateAsync(int id, Song song)
+        {
+            Song s = await _context.songs.SingleOrDefaultAsync(a => a.Id == id);
+            if (s == null)
+                return null;
             else
             {
-                g.Name = guide.Name;
-                g.IsActive = guide.IsActive;
+                s.Name = song.Name;
+                s.Genre = song.Genre;
+                s.Duration = song.Duration;
+                s.Link = song.Link;
+                s.ReleaseDate = song.ReleaseDate;
+                s.Singer = song.Singer;
+                s.SingerId = song.SingerId;
+                s.users = song.users;
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return s;
         }
 
-        public void UpdateStatus(int id, bool status)
+        public async Task DeleteAsync(int id)
         {
-            Singer g = GetById(id);
-            if (g != null)
-                g.IsActive = status;
-            _context.SaveChanges();
+            var song = await _context.songs.FindAsync(id);
+            if (song != null)
+            {
+                _context.songs.Remove(song);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
