@@ -45,13 +45,23 @@ const AllSongs = () => {
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.4&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9k3&zw"
         },
         {
-            id: "3",
+            id: "5",
             name: "Tov",
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.2&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9h2&zw"
         }, {
-            id: '4',
+            id: '6',
             name: 'Zanvil',
             link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.4&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9k3&zw"
+        },
+        {
+            id: "7",
+            name: "Acheinu",
+            link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.1&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo8vz80&zw"
+        },
+        {
+            id: "8",
+            name: "Simcha",
+            link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.3&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9b1&zw"
         }
     ]
 

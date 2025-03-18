@@ -66,4 +66,4 @@ const HomePage = () => {
         {isLogin && <AvatarUser />}
     </>)
 }
-export default HomePage
+export default HomePage;
