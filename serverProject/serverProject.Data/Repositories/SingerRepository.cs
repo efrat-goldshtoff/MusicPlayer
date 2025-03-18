@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using serverProject.Core.models;
 using serverProject.Core.Repositories;
-//using Microsoft.EntityFrameworkCore;
-using CourserverProjectses.Core.Repositories;
+using serverProject.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace serverProject.Data.Repositories
 {

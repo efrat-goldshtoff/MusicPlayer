@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using CourserverProjectses.Core.Repositories;
+using serverProject.Core.Repositories;
 using serverProject.Core.DTOs;
 using serverProject.Core.models;
 using serverProject.Core.Repositories;

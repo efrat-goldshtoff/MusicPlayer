@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using CourserverProjectses.Core.Repositories;
-using Courses.Service;
+using serverProject.Core.Repositories;
+using serverProject.Service;
 using serverProject.Core;
 using serverProject.Core.Repositories;
 using serverProject.Core.Services;

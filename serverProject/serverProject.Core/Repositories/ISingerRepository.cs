@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using serverProject.Core.models;
 
-namespace CourserverProjectses.Core.Repositories
+namespace serverProject.Core.Repositories
 {
     public interface ISingerRepository
     {
