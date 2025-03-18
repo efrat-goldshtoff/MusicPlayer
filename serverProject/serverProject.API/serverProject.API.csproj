@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\serverProject.Core\serverProject.Core.csproj" />
+    <ProjectReference Include="..\serverProject.Data\serverProject.Data.csproj" />
+    <ProjectReference Include="..\serverProject.Service\serverProject.Service.csproj" />
+  </ItemGroup>
+
+</Project>
