@@ -35,7 +35,7 @@ namespace serverProject.Data.Repositories
         public async Task<User> AddAsync(User user)
         {
             await _context.users.AddAsync(user);
-            //await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return user;
         }
 
@@ -52,7 +52,7 @@ namespace serverProject.Data.Repositories
                 u.Role = user.Role;
                 u.songs = user.songs;
             }
-            //await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return u;
         }
 
@@ -62,8 +62,12 @@ namespace serverProject.Data.Repositories
             if (user != null)
             {
                 _context.users.Remove(user);
-                //await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
+        }
+        public User GetUserByCredentials(string name, string password)
+        {
+            return _context.users.FirstOrDefault(user => user.Name == name && user.Password == password);
         }
     }
 }

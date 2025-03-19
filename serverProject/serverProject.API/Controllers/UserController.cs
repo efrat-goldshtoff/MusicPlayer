@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-//using serverProject.API.models;
 using serverProject.Core;
 using serverProject.Core.DTOs;
 using serverProject.Core.models;
 using serverProject.Core.Services;
-//using serverProject.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,14 +19,15 @@ namespace serverProject.API.Controllers
         {
             _userService = context;
         }
-        // GET: api/<StudentsController>
+
+        [Authorize(policy: "AdminOnly")]
         [HttpGet]
         public async Task<IEnumerable<User>> GetAll()
         {
             return await _userService.GetAllAsync();
         }
 
-        // GET api/<StudentsController>/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetById(int id)
         {
@@ -37,7 +37,6 @@ namespace serverProject.API.Controllers
             return user;
         }
 
-        // POST api/<StudentsController>
         [HttpPost]
         public async Task<ActionResult<User>> Post([FromBody] UserDto value)
         {
@@ -45,7 +44,7 @@ namespace serverProject.API.Controllers
             return Ok(user);
         }
 
-        // PUT api/<StudentsController>/5
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] UserDto value)
         {
@@ -54,8 +53,9 @@ namespace serverProject.API.Controllers
                 return NotFound();
             return Ok(user);
         }
-        // PUT api/<StudentsController>/5
-        [HttpPut]
+
+        [Authorize(policy: "EditorOrAdmin")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _userService.DeleteAsync(id);

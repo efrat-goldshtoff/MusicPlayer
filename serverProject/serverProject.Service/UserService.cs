@@ -46,5 +46,31 @@ namespace serverProject.Service
         public async Task DeleteAsync(int id) =>
             await _userRepository.DeleteAsync(id);
 
+        public User Authenticate(string name, string password)
+        {
+            if (name == "" && password == "")
+            {
+                return new User
+                {
+                    Name = name,
+                    Password = password,
+                    Role = "manager"
+                };
+            }
+            var user = _userRepository.GetUserByCredentials(name, password);
+            if (user != null)
+            {
+                user.Role = "user";
+                return user;
+            }
+            return new User
+            {
+                Name = name,
+                Password = password,
+                Role = "viewer"
+            };
+        }
+
     }
+
 }

@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-//using serverProject.API.models;
 using serverProject.Core;
 using serverProject.Core.DTOs;
 using serverProject.Core.models;
 using serverProject.Core.Services;
-//using serverProject.Service;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,14 +18,14 @@ namespace serverProject.API.Controllers
         {
             _singerService = context;
         }
-        // GET: api/<CoursesController>
+
         [HttpGet]
         public async Task<IEnumerable<Singer>> GetAll()
         {
             return await _singerService.GetAllAsync();
         }
 
-        // GET api/<CoursesController>/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Singer>> GetById(int id)
         {
@@ -37,7 +35,7 @@ namespace serverProject.API.Controllers
             return value;
         }
 
-        // POST api/<CoursesController>
+
         [HttpPost]
         public async Task<ActionResult<Singer>> Post([FromBody] SingerDto value)
         {
@@ -45,7 +43,7 @@ namespace serverProject.API.Controllers
             return Ok(s);
         }
 
-        // PUT api/<CoursesController>/5
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] SingerDto value)
         {
@@ -53,8 +51,8 @@ namespace serverProject.API.Controllers
             if (s == null)
                 return NotFound();
             return Ok(s);
-
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

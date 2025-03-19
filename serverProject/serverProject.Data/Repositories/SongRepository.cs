@@ -36,7 +36,7 @@ namespace serverProject.Data.Repositories
         public async Task<Song> AddAsync(Song song)
         {
             await _context.songs.AddAsync(song);
-            //await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return song;
         }
 
@@ -56,7 +56,7 @@ namespace serverProject.Data.Repositories
                 s.SingerId = song.SingerId;
                 s.users = song.users;
             }
-            //await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return s;
         }
 
@@ -66,7 +66,7 @@ namespace serverProject.Data.Repositories
             if (song != null)
             {
                 _context.songs.Remove(song);
-                //await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
         }
     }

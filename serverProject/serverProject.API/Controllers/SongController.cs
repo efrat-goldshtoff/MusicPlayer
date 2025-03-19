@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-//using serverProject.API.models;
 using serverProject.Core;
 using serverProject.Core.DTOs;
 using serverProject.Core.models;
 using serverProject.Core.Services;
-//using serverProject.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,14 +20,14 @@ namespace serverProject.API.Controllers
             _songService = context;
 
         }
-        // GET: api/<GuiderController>
+
         [HttpGet]
         public async Task<IEnumerable<Song>> GetAll()
         {
             return await _songService.GetAllAsync();
         }
 
-        // GET api/<GuiderController>/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Song>> GetById(int id)
         {
@@ -38,7 +37,7 @@ namespace serverProject.API.Controllers
             return song;
         }
 
-        // POST api/<GuiderController>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Song>> Post([FromBody] SongDto value)
         {
@@ -47,7 +46,7 @@ namespace serverProject.API.Controllers
             return Ok(s);
         }
 
-        // PUT api/<GuiderController>/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] SongDto song)
         {
@@ -56,7 +55,8 @@ namespace serverProject.API.Controllers
                 return NotFound();
             return Ok(s);
         }
-        // PUT api/<GuiderController>/5
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {

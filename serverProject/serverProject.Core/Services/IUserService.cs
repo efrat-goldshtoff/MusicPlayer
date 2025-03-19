@@ -15,5 +15,6 @@ namespace serverProject.Core.Services
         public Task<User> AddAsync(UserDto user);
         public Task<User> UpdateAsync(int id, UserDto user);
         public Task DeleteAsync(int id);
+        public User Authenticate(string name, string password);
     }
 }

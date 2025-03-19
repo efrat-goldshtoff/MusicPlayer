@@ -22,7 +22,7 @@ function App() {
     document.head.appendChild(favicon);
   }
 
-  setEmojiFavicon("🎵");
+  setEmojiFavicon("🎶");
 
 
   return (
