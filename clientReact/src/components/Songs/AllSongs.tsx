@@ -1,4 +1,5 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
+import { ApiClient } from "../../api/client";
 // import { useState } from "react";
 // import AddSong from "./AddSong";
 // import { Song } from "./Song";
@@ -18,6 +19,19 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 //     p: 4
 // }
 const AllSongs = () => {
+
+    const songsm = new ApiClient("http://localhost:5048");
+    const ssss = async () => {
+        const ss: [] = [];
+        try {
+            const ss = await songsm.singerAll();
+        } catch (e) {
+            console.log("ERROR!!!!");
+        }
+        return ss.map((r:any)=>r.title).toString();
+    }
+    const rr = ssss();
+    // console.log(ssss());
 
     // const ApiUrl='';
     // const songs=await axios.get(ApiUrl)
@@ -78,6 +92,8 @@ const AllSongs = () => {
     // }
 
     return (<>
+        <div>
+        </div>
         <div
             style={{
                 padding: '20px',

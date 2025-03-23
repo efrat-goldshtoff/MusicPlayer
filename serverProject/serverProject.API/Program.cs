@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -63,8 +62,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 
-
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -93,16 +90,28 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-var app = builder.Build();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", builder =>
+        builder.WithOrigins("http://localhost:5173")
+               .AllowAnyHeader()
+               .AllowAnyMethod());
+});
+
+var app = builder.Build();
 
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 
+app.UseCors("AllowLocalhost");  // הפעלת CORS
 
-app.UseCors();
+//app.UseCors();
+
+
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
