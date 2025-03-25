@@ -19,9 +19,9 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
                 flexDirection="column"
                 gap="16px"
                 sx={{
-                    maxHeight: '550px',
+                    maxHeight: '220px',
                     overflowY: 'auto',
-                    padding: '10px',
+                    padding: '4px',
                     border: '1px solid #ccc',
                     borderRadius: '15px',
                     backgroundColor: '#fff'
@@ -29,27 +29,31 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
                 {songs?.map((song, index) => (
                     <Card key={index}
                         sx={{
-                            minHeight: 130,
+                            minHeight: 90,
                             borderRadius: '15px'
                         }}>
                         <CardContent>
-                            <Typography variant="h6" gutterBottom>
+                            <Typography variant="h6">
                                 {song.name}
                             </Typography>
                             <Button
                                 sx={{
-                                    border: '1px solid blue',
+                                    color: 'purple',
+                                    border: '1px solid purple',
                                     marginRight: '3px'
                                 }}
                                 onClick={() => onPlay(song?.link ?? "no link")}>
-                                Play 🔵
+                                Play 🟣
+                                {/* 🔵 */}
                             </Button>
                             <a href={song.link} download={song.name + '.mp3'}>
                                 <Button
                                     sx={{
-                                        border: '1px solid blue'
+                                        color: 'purple',
+                                        border: '1px solid purple'
                                     }}>
-                                    Download 🔽
+                                    Download 👇
+                                    {/* 🔽 */}
                                 </Button>
                             </a>
                         </CardContent>

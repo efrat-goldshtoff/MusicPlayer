@@ -10,7 +10,7 @@ const myRouter =
             errorElement: <>main error</>,
             children: [
                 {
-                    path: '/allSongs',
+                    path: '/songs',
                     element: <SongsPage />
                 }
             ]

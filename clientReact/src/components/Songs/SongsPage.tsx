@@ -22,12 +22,20 @@ const SongsPage = () => {
         if (singer)
             filtered = filtered.filter(song => song.singer?.name === singer);
         if (genre)
-            filtered = filtered.filter(song => song.genre === genre);
+            filtered = filtered.filter(song => song.genre == genre);
+        console.log(filtered);
         setFilteredS(filtered);
     }
     return (<>
-        <Box>
-            <Card>
+        <h2 style={{ marginBottom: '0px' }}>🎶 Play Me 🎶</h2>
+        <Box
+            sx={{
+                marginBottom: '4px'
+            }}>
+            <Card
+                sx={{
+                    maxHeight: '180px'
+                }}>
                 <CardContent>
                     <TextField fullWidth
                         label="Search by singer"
@@ -39,10 +47,20 @@ const SongsPage = () => {
                     <TextField fullWidth
                         label="Search by genre"
                         inputRef={genreRef}
-                    /><div></div>
+                    />
+                    <div></div>
                     <Button
+                        sx={{
+                            color: 'purple',
+                            border: '1px solid purple'
+                        }}
                         type="submit"
-                        onClick={() => filterS(singerRef.toString(), genreRef.toString())}
+                        onClick={() =>
+                            filterS(
+                                singerRef.current?.value ?? '',
+                                genreRef.current?.value ?? ''
+                            )
+                        }
                     >
                         Search 🔎
                     </Button>
@@ -50,7 +68,6 @@ const SongsPage = () => {
             </Card>
         </Box>
         <Box>
-            <h2>🎶 Play Me 🎶</h2>
             {/* <FilterSongs onFilter={filterS} /> */}
             <AllSongs
                 songs={filteredS.length > 0 ?
@@ -58,7 +75,8 @@ const SongsPage = () => {
                     songs}
                 onPlay={setCurrent}
             />
-            {current && <Music link={current} />}
+            <Music link={current!} />
+            {/* {current &&  <Music link={current} /> }  */}
         </Box>
     </>)
 

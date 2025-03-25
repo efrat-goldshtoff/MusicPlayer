@@ -90,12 +90,10 @@ const Login = ({ successLogin, typeAction, close }:
 
                     <Button
                         type="submit"
-                        variant="contained"
+                        // variant="contained"
                         sx={{
-                            background: 'black',
-                            color: 'white',
-                            borderRadius: '10px',
-                            border: '2px solid white'
+                            color: 'purple',
+                            border: '1px solid purple'
                         }}>
                         {typeAction}
                     </Button>

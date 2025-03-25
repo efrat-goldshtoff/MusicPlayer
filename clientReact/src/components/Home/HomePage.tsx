@@ -3,6 +3,11 @@ import { Box, Button } from "@mui/material";
 import Login from "../Login/Login";
 import AvatarUser from "../Login/AvatarUser";
 
+const style = {
+    border: '1px solid purple',
+    color: 'purple'
+}
+
 const HomePage = () => {
     const [isLogin, setIsLogin] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -27,12 +32,7 @@ const HomePage = () => {
                     gap: 2
                 }}>
                 <Button
-                    sx={{
-                        border: '1px solid blue'
-                    }}
-                    //  variant="contained"
-                    // color="secondary"
-                    // sx={{ mx: 2 }}
+                    sx={style}
                     onClick={() => {
                         setIsOpen(true);
                         setMyType('Sign');
@@ -40,12 +40,7 @@ const HomePage = () => {
                     Sign
                 </Button>
                 <Button
-                    sx={{
-                        border: '1px solid blue',
-                    }}
-                    //  variant="contained"
-                    // color="secondary"
-                    // sx={{ mx: 2 }}
+                    sx={style}
                     onClick={() => {
                         setIsOpen(true);
                         setMyType('Login');

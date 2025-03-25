@@ -74,10 +74,8 @@ const UpdateDetails = ({ setUpdate }: { setUpdate: Function }) => {
                         type="submit"
                         variant="contained"
                         sx={{
-                            background: 'black',
-                            color: "white",
-                            borderRadius: '10px',
-                            border: '2px solid white'
+                            color: 'purple',
+                            border: '1px solid purple'
                         }}>
                         Update
                     </Button>
