@@ -28,7 +28,6 @@ const UpdateDetails = ({ setUpdate }: { setUpdate: Function }) => {
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
-        // console.log(context?.user);
         if (!context?.user.firstName) {
             alert('Not Login User');
             return;
@@ -43,7 +42,7 @@ const UpdateDetails = ({ setUpdate }: { setUpdate: Function }) => {
                 { headers: { 'user-id': context?.user.id } }
             )
             console.log(result);
-            
+
             context?.userDispatch({
                 type: 'UPDATE',
                 data: {

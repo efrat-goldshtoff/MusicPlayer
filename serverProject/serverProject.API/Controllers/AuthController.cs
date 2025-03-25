@@ -17,7 +17,7 @@ namespace serverProject.API.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] Login login)
+        public IActionResult Login([FromBody] LoginM login)
         {
             var token = _authService.GenerateJwtToken(login.Name, login.Password);
             if (string.IsNullOrEmpty(token))

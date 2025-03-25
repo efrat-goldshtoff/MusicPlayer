@@ -22,7 +22,7 @@ export class ApiClient {
      * @param body (optional) 
      * @return OK
      */
-    login(body: Login | undefined): Promise<void> {
+    login(body: LoginM | undefined): Promise<void> {
         let url_ = this.baseUrl + "/api/Auth/login";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -668,11 +668,11 @@ export class ApiClient {
     }
 }
 
-export class Login implements ILogin {
+export class LoginM implements ILoginM {
     name?: string | undefined;
     password?: string | undefined;
 
-    constructor(data?: ILogin) {
+    constructor(data?: ILoginM) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -688,9 +688,9 @@ export class Login implements ILogin {
         }
     }
 
-    static fromJS(data: any): Login {
+    static fromJS(data: any): LoginM {
         data = typeof data === 'object' ? data : {};
-        let result = new Login();
+        let result = new LoginM();
         result.init(data);
         return result;
     }
@@ -703,7 +703,7 @@ export class Login implements ILogin {
     }
 }
 
-export interface ILogin {
+export interface ILoginM {
     name?: string | undefined;
     password?: string | undefined;
 }

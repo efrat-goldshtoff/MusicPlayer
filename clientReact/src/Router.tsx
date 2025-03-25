@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "./components/Home/AppLayout";
-import AllSongs from "./components/Songs/AllSongs";
+import SongsPage from "./components/Songs/SongsPage";
 
 const myRouter =
     createBrowserRouter([
@@ -11,7 +11,7 @@ const myRouter =
             children: [
                 {
                     path: '/allSongs',
-                    element: <AllSongs />
+                    element: <SongsPage />
                 }
             ]
         }

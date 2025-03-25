@@ -57,12 +57,12 @@ namespace serverProject.Service
                     Role = "manager"
                 };
             }
-            var user = _userRepository.GetUserByCredentials(name, password);
-            if (user != null)
-            {
-                user.Role = "user";
-                return user;
-            }
+            //var user = _userRepository.GetUserByCredentials(name, password);
+            //if (user != null)
+            //{
+            //    user.Role = "user";
+            //    return user;
+            //}
             return new User
             {
                 Name = name,
