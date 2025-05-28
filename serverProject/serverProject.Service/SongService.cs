@@ -44,5 +44,10 @@ namespace serverProject.Service
 
         public async Task DeleteAsync(int id) =>
             await (_songRepository.DeleteAsync(id));
+
+        public async Task<IEnumerable<Song>> GetSongsByGenreAsync(string genre)
+        {
+            return await _songRepository.GetSongByGenreAsync(genre);
+        }
     }
 }

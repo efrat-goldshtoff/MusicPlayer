@@ -11,9 +11,11 @@ namespace serverProject.Core.Repositories
     {
         public Task<IEnumerable<User>> GetAllasync();
         public Task<User> GetByIdAsync(int id);
+        public Task<User> GetUserByNameAsync(string name);
         public Task<User> AddAsync(User user);
         public Task<User> UpdateAsync(int id, User user);
         public Task DeleteAsync(int id);
         public User GetUserByCredentials(string name, string password);
+        public Task<User> GetByEmailAsync(string email);
     }
 }

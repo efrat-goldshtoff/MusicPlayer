@@ -8,5 +8,6 @@
         public string Password { get; set; }
         public string Role { get; set; }
         public List<Song> songs { get; set; }
+        public ICollection<PlayList> PlayLists { get; set; }
     }
 }

@@ -90,7 +90,6 @@ const Login = ({ successLogin, typeAction, close }:
 
                     <Button
                         type="submit"
-                        // variant="contained"
                         sx={{
                             color: 'purple',
                             border: '1px solid purple'

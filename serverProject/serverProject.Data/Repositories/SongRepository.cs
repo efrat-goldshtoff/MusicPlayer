@@ -20,12 +20,14 @@ namespace serverProject.Data.Repositories
 
         public async Task<IEnumerable<Song>> GetAllasync()
         {
-            return await _context.songs.Include(s => s.Singer).Include(s => s.users).ToListAsync();
+            return await _context.songs.Include(s => s.Singer).Include(s => s.users).Include(s => s.PlayLists).ToListAsync();
+            //return await _context.songs.Include(s => s.Singer).Include(s => s.users).ToListAsync();
         }
 
         public async Task<Song> GetByIdAsync(int id)
         {
-            return await _context.songs.FindAsync(id);
+            return await _context.songs.Include(s => s.Singer).Include(s => s.users).Include(s => s.PlayLists).FirstOrDefaultAsync(s => s.Id == id);
+            //return await _context.songs.FindAsync(id);
         }
 
         public async Task<IEnumerable<Song>> GetSongByGenreAsync(string g)

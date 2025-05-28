@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +37,13 @@ builder.Services.AddScoped<ISongRepository, SongRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<IPlayListService, PlayListService>();
+builder.Services.AddScoped<IPlayListRepository, PlayListRepository>();
+
 builder.Services.AddDbContext<DataContext>();
+
+//builder.Services.AddDbContext<DataContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -66,6 +73,11 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("EditorOrAdmin", policy => policy.RequireRole("Admin", "Editor")); // If you have an "Editor" role
+});
 
 
 builder.Services.AddSwaggerGen(options =>
@@ -95,7 +107,6 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-
 var app = builder.Build();
 
 app.UseCors("AllowAll");
@@ -104,11 +115,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-//if (app.Environment.IsDevelopment())
-//{
-app.UseSwagger();
-app.UseSwaggerUI();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 

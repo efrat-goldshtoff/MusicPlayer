@@ -18,7 +18,6 @@ namespace serverProject.API.Controllers
         public SongController(ISongService context)
         {
             _songService = context;
-
         }
 
         [HttpGet]
@@ -35,6 +34,24 @@ namespace serverProject.API.Controllers
             if (song == null)
                 return NotFound();
             return song;
+        }
+
+        [HttpGet("byGenre/{genre}")]
+        public async Task<ActionResult<IEnumerable<Song>>> GetByGenre(string genre)
+        {
+            var songs = await _songService.GetSongsByGenreAsync(genre); // Assuming GetSongsByGenreAsync exists in ISongService
+            if (songs == null || !songs.Any())
+                return NotFound();
+            return Ok(songs);
+        }
+
+        [HttpGet("searchByAI")]
+        public async Task<ActionResult<IEnumerable<Song>>> SearchSongsByAI([FromQuery] string query)
+        {
+            // This will call an AI service to get relevant genres/keywords
+            // and then filter songs based on those.
+            // For now, it will be a placeholder.
+            return Ok(await _songService.GetAllAsync()); // Placeholder
         }
 
         [Authorize(Roles = "Admin")]

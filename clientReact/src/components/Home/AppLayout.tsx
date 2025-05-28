@@ -17,11 +17,20 @@ const AppLayout = () => {
     const [user, userDispatch] = useReducer(UserReducer, initUser);
 
     return (<>
+     <div style={{ height: '90vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <UserContext value={{ user, userDispatch }}>
             <HomePage />
             <NavBar />
-            <Outlet />
+            <div style={{ flex: 1, overflow: 'auto' }}>
+                <Outlet />
+            </div>
         </UserContext>
+    </div>
+        {/* <UserContext value={{ user, userDispatch }}>
+            <HomePage />
+            <NavBar />
+            <Outlet />
+        </UserContext> */}
     </>)
 }
 export default AppLayout

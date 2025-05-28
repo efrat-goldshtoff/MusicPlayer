@@ -12,6 +12,8 @@ namespace serverProject.Core.Services
     {
         public Task<IEnumerable<User>> GetAllAsync();
         public Task<User> GetByIdAsync(int id);
+        Task<User> GetUserByEmailAsync(string email);
+        Task<User> GetUserByNameAsync(string name);
         public Task<User> AddAsync(UserDto user);
         public Task<User> UpdateAsync(int id, UserDto user);
         public Task DeleteAsync(int id);

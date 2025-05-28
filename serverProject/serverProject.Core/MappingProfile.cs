@@ -17,6 +17,7 @@ namespace serverProject.Core
             CreateMap<Singer, SingerDto>().ReverseMap();
             CreateMap<Song, SongDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<PlayList, PlayListDto>().ReverseMap();
         }
     }
 }

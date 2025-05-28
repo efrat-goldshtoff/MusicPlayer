@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import Login from "../Login/Login";
 import AvatarUser from "../Login/AvatarUser";
 
-const style = {
-    border: '1px solid purple',
-    color: 'purple'
-}
+// const style = {
+//     border: '1px solid purple',
+//     color: 'purple'
+// }
 
 const HomePage = () => {
     const [isLogin, setIsLogin] = useState(false);
@@ -22,7 +22,48 @@ const HomePage = () => {
     }
 
     return (<>
+
         {!isLogin && (
+            <Paper
+                elevation={3}
+                sx={{
+                    position: "absolute",
+                    top: 20,
+                    left: 20,
+                    padding: 2,
+                    borderRadius: 2,
+                    display: "flex",
+                    gap: 2
+                }}>
+                <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => {
+                        setIsOpen(true);
+                        setMyType('Sign');
+                    }}>
+                    Sign
+                </Button>
+                <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => {
+                        setIsOpen(true);
+                        setMyType('Login');
+                    }}>
+                    Login
+                </Button>
+            </Paper>
+        )}
+        {isOpen &&
+            <Login
+                successLogin={handleLoginSuccessful}
+                typeAction={myType}
+                close={() => setIsOpen(false)}
+            />}
+        {isLogin && <AvatarUser />}
+
+        {/* {!isLogin && (
             <Box
                 sx={{
                     position: "absolute",
@@ -55,7 +96,7 @@ const HomePage = () => {
                 typeAction={myType}
                 close={() => setIsOpen(false)}
             />}
-        {isLogin && <AvatarUser />}
+        {isLogin && <AvatarUser />} */}
     </>)
 }
 export default HomePage;

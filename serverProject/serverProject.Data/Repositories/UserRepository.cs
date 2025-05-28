@@ -19,12 +19,19 @@ namespace serverProject.Data.Repositories
 
         public async Task<IEnumerable<User>> GetAllasync()
         {
-            return await _context.users.Include(u => u.songs).ToListAsync();
+            return await _context.users.Include(u => u.songs).Include(u => u.PlayLists).ToListAsync();
+            //return await _context.users.Include(u => u.songs).ToListAsync();
         }
 
         public async Task<User> GetByIdAsync(int id)
         {
-            return await _context.users.FindAsync(id);
+            return await _context.users.Include(u => u.songs).Include(u => u.PlayLists).FirstOrDefaultAsync(u => u.Id == id);
+            //return await _context.users.FindAsync(id);
+        }
+
+        public async Task<User> GetUserByNameAsync(string name)
+        {
+            return await _context.users.FirstOrDefaultAsync(u => u.Name == name);
         }
 
         public async Task<User> GEtByEmailAsync(string email)
@@ -68,6 +75,11 @@ namespace serverProject.Data.Repositories
         public User GetUserByCredentials(string name, string password)
         {
             return _context.users.FirstOrDefault(user => user.Name == name && user.Password == password);
+        }
+
+        public Task<User> GetByEmailAsync(string email)
+        {
+            return _context.users.FirstOrDefaultAsync(user => user.Email == email);
         }
     }
 }

@@ -14,5 +14,6 @@ namespace serverProject.Core.Repositories
         public Task<Song> AddAsync(Song song);
         public Task<Song> UpdateAsync(int id, Song song);
         public Task DeleteAsync(int id);
+        public Task<IEnumerable<Song>> GetSongByGenreAsync(string genre);
     }
 }

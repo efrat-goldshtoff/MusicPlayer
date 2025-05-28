@@ -12,5 +12,6 @@
         public int SingerId { get; set; }
         public Singer Singer { get; set; }
         public List<User> users { get; set; }
+        public List<PlayList> PlayLists { get; set; }
     }
 }

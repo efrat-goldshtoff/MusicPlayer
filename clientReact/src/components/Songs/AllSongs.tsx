@@ -1,5 +1,6 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import { Song } from "../../api/client";
+import { Download, PlayArrow } from "@mui/icons-material";
 
 const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => void }) => {
 
@@ -12,7 +13,8 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
             }}>
             <header style={{
                 fontWeight: 'bold',
-                fontSize: '15px'
+                fontSize: '15px',
+                color: 'purple'
             }}>My Songs
             </header>
             <Box display="flex"
@@ -33,7 +35,10 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
                             borderRadius: '15px'
                         }}>
                         <CardContent>
-                            <Typography variant="h6">
+                            <Typography variant="h6"
+                                sx={{
+                                    color: 'purple'
+                                }}>
                                 {song.name}
                             </Typography>
                             <Button
@@ -43,8 +48,7 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
                                     marginRight: '3px'
                                 }}
                                 onClick={() => onPlay(song?.link ?? "no link")}>
-                                Play 🟣
-                                {/* 🔵 */}
+                                Play <PlayArrow />
                             </Button>
                             <a href={song.link} download={song.name + '.mp3'}>
                                 <Button
@@ -52,8 +56,7 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
                                         color: 'purple',
                                         border: '1px solid purple'
                                     }}>
-                                    Download 👇
-                                    {/* 🔽 */}
+                                    Download <Download />
                                 </Button>
                             </a>
                         </CardContent>
@@ -64,45 +67,3 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
     </>);
 }
 export default AllSongs;
-
-
-// const songs = [
-//     {
-//         id: "1",
-//         name: "Acheinu",
-//         link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.1&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo8vz80&zw"
-//     },
-//     {
-//         id: "2",
-//         name: "Simcha",
-//         link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.3&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9b1&zw"
-//     },
-//     {
-//         id: "3",
-//         name: "Tov",
-//         link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.2&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9h2&zw"
-//     }, {
-//         id: '4',
-//         name: 'Zanvil',
-//         link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.4&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9k3&zw"
-//     },
-//     {
-//         id: "5",
-//         name: "Tov",
-//         link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.2&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9h2&zw"
-//     }, {
-//         id: '6',
-//         name: 'Zanvil',
-//         link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.4&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9k3&zw"
-//     },
-//     {
-//         id: "7",
-//         name: "Acheinu",
-//         link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.1&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo8vz80&zw"
-//     },
-//     {
-//         id: "8",
-//         name: "Simcha",
-//         link: "https://mail.google.com/mail/u/0?ui=2&ik=3ff0f85931&attid=0.3&permmsgid=msg-a:r6551807614108487557&view=att&disp=safe&realattid=f_m8bo9m9b1&zw"
-//     }
-// ]
