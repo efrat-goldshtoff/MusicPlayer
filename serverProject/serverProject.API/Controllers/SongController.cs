@@ -5,6 +5,7 @@ using serverProject.Core.models;
 using serverProject.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using serverProject.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,6 +16,8 @@ namespace serverProject.API.Controllers
     public class SongController : ControllerBase
     {
         private readonly ISongService _songService;
+        private readonly AwsS3Service _s3Service;
+
         public SongController(ISongService context)
         {
             _songService = context;
@@ -56,12 +59,32 @@ namespace serverProject.API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<ActionResult<Song>> Post([FromBody] SongDto value)
+        [Consumes("multipart/form-data")] // Allow file upload
+        public async Task<ActionResult<Song>> Post([FromForm] SongDto value, [FromForm] IFormFile audioFile)
         {
+            if (audioFile == null || audioFile.Length == 0)
+            {
+                return BadRequest("Audio file is required.");
+            }
+
+            // Upload file to S3
+            var audioUrl = await _s3Service.UploadFileAsync(audioFile);
+
+            // Update DTO with the S3 URL
+            value.Link = audioUrl;
 
             Song s = await _songService.AddAsync(value);
             return Ok(s);
         }
+
+        //[Authorize(Roles = "Admin")]
+        //[HttpPost]
+        //public async Task<ActionResult<Song>> Post([FromBody] SongDto value)
+        //{
+
+        //    Song s = await _songService.AddAsync(value);
+        //    return Ok(s);
+        //}
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]

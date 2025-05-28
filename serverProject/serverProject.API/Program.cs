@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Amazon.S3;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +80,9 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("EditorOrAdmin", policy => policy.RequireRole("Admin", "Editor")); // If you have an "Editor" role
 });
 
+
+builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddScoped<IAwsS3Service, AwsS3Service>();
 
 builder.Services.AddSwaggerGen(options =>
 {
