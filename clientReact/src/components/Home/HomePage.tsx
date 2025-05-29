@@ -4,11 +4,6 @@ import Login from "../Login/Login";
 import AvatarUser from "../Login/AvatarUser";
 import { UserContext } from "../Login/UserContext";
 
-// const style = {
-//     border: '1px solid purple',
-//     color: 'purple'
-// }
-
 const HomePage = () => {
     const context = useContext(UserContext);
     const [isLogin, setIsLogin] = useState(false);

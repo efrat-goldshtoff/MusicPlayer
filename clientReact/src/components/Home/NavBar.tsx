@@ -3,11 +3,6 @@ import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { useContext } from "react";
 import { UserContext } from "../Login/UserContext";
 
-// const style = {
-//     marginRight: "10px",
-//     color: 'purple'
-// }
-
 const NavBar = () => {
     const context = useContext(UserContext);
     const isUserLoggedIn = !!context?.user.id;
