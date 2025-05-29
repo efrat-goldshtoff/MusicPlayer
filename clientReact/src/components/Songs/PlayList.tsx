@@ -34,16 +34,6 @@ const PlayList = () => {
             setError('Failed to fetch playlists');
             console.error("Error fetching playlists:", error);
         }
-        // try {
-        //     const res = await axios.get('https://localhost:7208/api/playlists');
-        //     if (Array.isArray(res.data)) {
-        //         setPlayLists(res.data);
-        //     } else {
-        //         setError('Failed to fetch playlists');
-        //     }
-        // } catch {
-        //     setError('Failed to fetch playlists');
-        // }
     };
     const fetchAllSongs = async () => {
         try {
@@ -192,7 +182,7 @@ const PlayList = () => {
                                         selectedPlaylist.songs.map((song) => (
                                             <ListItem key={song.id}
                                                 secondaryAction={
-                                                    <IconButton edge="end" aria-label="remove" onClick={() => handleRemoveSongFromPlaylist(song.id)}>
+                                                    <IconButton edge="end" aria-label="remove" onClick={() => handleRemoveSongFromPlaylist(song.id!)}>
                                                         <Remove />
                                                     </IconButton>
                                                 }>
