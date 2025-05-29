@@ -66,7 +66,7 @@ namespace serverProject.API.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [Consumes("multipart/form-data")] // Allow file upload
-        public async Task<ActionResult<Song>> Post([FromForm] SongDto value, [FromForm] IFormFile audioFile)
+        public async Task<ActionResult<Song>> Post([FromForm] SongDto value, IFormFile audioFile)
         {
             if (audioFile == null || audioFile.Length == 0)
             {

@@ -11,15 +11,19 @@ using serverProject.Core.Services;
 
 namespace serverProject.Service
 {
-    public class AwsS3Service:IAwsS3Service
+    public class AwsS3Service : IAwsS3Service
     {
         private readonly IAmazonS3 _s3Client;
         private readonly string _bucketName;
         private readonly string _region;
 
-        public AwsS3Service(IAmazonS3 s3Client, IConfiguration configuration)
+        public AwsS3Service(IAmazonS3 s3Client
+            , IConfiguration configuration
+            )
         {
             _s3Client = s3Client;
+            //_bucketName = Environment.GetEnvironmentVariable("AWS__BucketName");
+            //_region = Environment.GetEnvironmentVariable("AWS__Region");
             _bucketName = configuration["AWS:BucketName"];
             _region = configuration["AWS:Region"];
         }

@@ -20,31 +20,31 @@ namespace serverProject.Data.Repositories
 
         public async Task<IEnumerable<Song>> GetAllasync()
         {
-            return await _context.songs.Include(s => s.Singer).Include(s => s.users).Include(s => s.PlayLists).ToListAsync();
+            return await _context.Songs.Include(s => s.Singer).Include(s => s.users).Include(s => s.PlayLists).ToListAsync();
             //return await _context.songs.Include(s => s.Singer).Include(s => s.users).ToListAsync();
         }
 
         public async Task<Song> GetByIdAsync(int id)
         {
-            return await _context.songs.Include(s => s.Singer).Include(s => s.users).Include(s => s.PlayLists).FirstOrDefaultAsync(s => s.Id == id);
+            return await _context.Songs.Include(s => s.Singer).Include(s => s.users).Include(s => s.PlayLists).FirstOrDefaultAsync(s => s.Id == id);
             //return await _context.songs.FindAsync(id);
         }
 
         public async Task<IEnumerable<Song>> GetSongByGenreAsync(string g)
         {
-            return await _context.songs.Where(s => s.Genre == g).ToListAsync();
+            return await _context.Songs.Where(s => s.Genre == g).ToListAsync();
         }
 
         public async Task<Song> AddAsync(Song song)
         {
-            await _context.songs.AddAsync(song);
+            await _context.Songs.AddAsync(song);
             await _context.SaveChangesAsync();
             return song;
         }
 
         public async Task<Song> UpdateAsync(int id, Song song)
         {
-            Song s = await _context.songs.SingleOrDefaultAsync(a => a.Id == id);
+            Song s = await _context.Songs.SingleOrDefaultAsync(a => a.Id == id);
             if (s == null)
                 return null;
             else
@@ -64,10 +64,10 @@ namespace serverProject.Data.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            var song = await _context.songs.FindAsync(id);
+            var song = await _context.Songs.FindAsync(id);
             if (song != null)
             {
-                _context.songs.Remove(song);
+                _context.Songs.Remove(song);
                 await _context.SaveChangesAsync();
             }
         }

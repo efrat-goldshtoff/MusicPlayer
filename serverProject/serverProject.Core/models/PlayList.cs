@@ -12,6 +12,6 @@ namespace serverProject.Core.models
         public string Name { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public List<Song> songs { get; set; }
+        public List<Song> Songs { get; set; }
     }
 }

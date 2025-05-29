@@ -11,6 +11,10 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Amazon.S3;
+using System.Runtime;
+using System;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure; // Add this
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,17 +45,32 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPlayListService, PlayListService>();
 builder.Services.AddScoped<IPlayListRepository, PlayListRepository>();
 
-builder.Services.AddDbContext<DataContext>();
+//builder.Services.AddDbContext<DataContext>();
 
 builder.Services.AddHttpClient<IAIGenreService, AIGenreService>(); // Register HttpClient
-builder.Services.AddScoped<IAIGenreService, AIGenreService>(); // Register the service
+//builder.Services.AddScoped<IAIGenreService, AIGenreService>(); // Register the service
 
 // Add OpenAI configuration
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
+builder.Services.AddDbContext<DataContext>(options =>
+  options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
 //builder.Services.AddDbContext<DataContext>(options =>
+//    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+//        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+
+
+//builder.Services.AddDbContext<DataContext>(options =>
+//    options.UseSqlServer(
+//        Environment.GetEnvironmentVariable("DefaultConnection")
+//        //builder.Configuration.GetConnectionString("DefaultConnection")
+//        ));
+
+//builder.Services.AddDbContext<DbContext>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -62,22 +81,31 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
+    //var issuer = Environment.GetEnvironmentVariable("JWT__Issuer4
+    var issuer = builder.Configuration["JWT:Issuer"];
+    //var audience = Environment.GetEnvironmentVariable("JWT__Audience");
+    var audience = builder.Configuration["JWT:Audience"];
+    //var key = Environment.GetEnvironmentVariable("JWT__Key");
+    var key = builder.Configuration["JWT:Key"];
+    if (string.IsNullOrEmpty(issuer) || string.IsNullOrEmpty(audience) || string.IsNullOrEmpty(key))
+    {
+        throw new InvalidOperationException("JWT configuration values are not set in environment variables.");
+    }
     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["JWT:Issuer"],
-        ValidAudience = builder.Configuration["JWT:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
+        ValidIssuer = issuer,
+        ValidAudience = audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
     };
 });
 
@@ -118,6 +146,8 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+builder.Configuration.AddEnvironmentVariables();
+
 var app = builder.Build();
 
 app.UseCors("AllowAll");

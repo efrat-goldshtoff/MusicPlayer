@@ -20,23 +20,23 @@ namespace serverProject.Data.Repositories
         }
         public async Task<IEnumerable<Singer>> GetAllasync()
         {
-            return await _context.singers.Include(s => s.songs).ToListAsync();
+            return await _context.Singers.Include(s => s.songs).ToListAsync();
         }
 
 
         public async Task<Singer> GetByIdAsync(int id)
         {
-            return await _context.singers.FindAsync(id);
+            return await _context.Singers.FindAsync(id);
         }
 
         public async Task<Singer> GetByNameAsync(string name)
         {
-            return await _context.singers.FirstOrDefaultAsync(s => s.Name == name);
+            return await _context.Singers.FirstOrDefaultAsync(s => s.Name == name);
         }
 
         public async Task<Singer> AddAsync(Singer singer)
         {
-            await _context.singers.AddAsync(singer);
+            await _context.Singers.AddAsync(singer);
             await _context.SaveChangesAsync();
             return singer;
         }
@@ -44,7 +44,7 @@ namespace serverProject.Data.Repositories
 
         public async Task<Singer> UpdateAsync(int id, Singer singer)
         {
-            Singer s = await _context.singers.SingleOrDefaultAsync(a => a.Id == id);
+            Singer s = await _context.Singers.SingleOrDefaultAsync(a => a.Id == id);
             if (s == null)
                 return null;
             else
@@ -58,10 +58,10 @@ namespace serverProject.Data.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            var singer = await _context.singers.FindAsync(id);
+            var singer = await _context.Singers.FindAsync(id);
             if (singer != null)
             {
-                _context.singers.Remove(singer);
+                _context.Singers.Remove(singer);
                 await _context.SaveChangesAsync();
             }
         }

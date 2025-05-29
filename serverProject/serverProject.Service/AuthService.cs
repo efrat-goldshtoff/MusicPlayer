@@ -16,7 +16,9 @@ namespace serverProject.Service
     {
         private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
-        public AuthService(IConfiguration config, IUserRepository userRepository)
+        public AuthService(
+            IConfiguration config,
+            IUserRepository userRepository)
         {
             _config = config;
             _userRepository = userRepository;
@@ -48,7 +50,14 @@ namespace serverProject.Service
         private string GenerateToken(User user)
         {
 
-            var secKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var secKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                    _config
+                    [
+                    //Environment.GetEnvironmentVariable(
+                    "Jwt__Key"
+                //)
+                ]
+                ));
             var credentials = new SigningCredentials(secKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
@@ -59,8 +68,14 @@ namespace serverProject.Service
     };
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer:
+                    _config["Jwt:Issuer" // Use the Issuer from configuration
+                                         //Environment.GetEnvironmentVariable("Jwt__Issuer"),
+                ],
+                audience:
+                    _config["Jwt:Audience" // Use the Audience from configuration
+                                           //Environment.GetEnvironmentVariable("Jwt__Audience"),
+                ],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials

@@ -30,43 +30,74 @@ const Login = ({ successLogin, typeAction, close }:
         try {
             let result: any;
             if (typeAction === 'Sign') {
-                const registerM = new UserDto();
-                registerM.name = nameRef.current?.value || '';
-                registerM.password = passwordRef.current?.value || '';
-                registerM.email = emailRef.current?.value || '';
+                const registerDto = new UserDto();
+                registerDto.name = nameRef.current?.value || '';
+                registerDto.password = passwordRef.current?.value || '';
+                registerDto.email = emailRef.current?.value || '';
+                registerDto.role = 'User';
 
-                // result = await apiClient.register(registerM);
-                if (!result || !result.token || !result.message) {
-                    console.error("Missing Token or Message ", result);
-                }
-                else {
-                    console.log('Registered success ', result);
-                }
+                result = await apiClient.register(registerDto);
+                context?.userDispatch({
+                    type: 'CREATE',
+                    data: {
+                        id: result.user.id,
+                        firstName: result.user.name,
+                        email: result.user.email,
+                        password: registerDto.password,
+                        lastName: ''
+                    }
+                });
+                localStorage.setItem('token', result.token);
+                // if (!result || !result.token || !result.message) {
+                //     console.error("Missing Token or Message ", result);
+                // }
+                // else {
+                //     console.log('Registered success ', result);
+                // }
             }
-            else if (typeAction === 'Login') {
+            else {
                 const loginM = new LoginM();
                 loginM.name = nameRef.current?.value || '';
                 loginM.password = passwordRef.current?.value || '';
                 result = await apiClient.login(loginM);
-            }
-            if (result && (result.token || result.message)) {
+                const tokenPayLoad = JSON.parse(atob(result.token.split('.')[1]));
                 context?.userDispatch({
                     type: 'CREATE',
                     data: {
-                        id: nameRef.current?.value || '',
-                        firstName: nameRef.current?.value || '',
-                        password: passwordRef.current?.value || ''
+                        id: tokenPayLoad.id,
+                        firstName: tokenPayLoad.unique_name,
+                        email: tokenPayLoad.email,
+                        password: loginM.password,
+                        role: tokenPayLoad.role
                     }
                 });
-                setOpen(false);
-                successLogin();
-            } else {
-                alert('Something wrong, Please try again');
+                localStorage.setItem('token', result.token);
             }
+            setOpen(false);
+            successLogin();
+            // if (result && (result.token || result.message)) {
+            //     context?.userDispatch({
+            //         type: 'CREATE',
+            //         data: {
+            //             id: nameRef.current?.value || '',
+            //             firstName: nameRef.current?.value || '',
+            //             password: passwordRef.current?.value || ''
+            //         }
+            //     });
+            //     setOpen(false);
+            //     successLogin();
+            // } else {
+            //     alert('Something wrong, Please try again');
+            // }
         } catch (error: any) {
-            alert(typeAction === 'Sign' ? 'User Already Exists' :
-                'User Not Found'
-            );
+            if (error.status === 400 && typeAction === 'Sign') {
+                alert(`Registration failed: ${error.result}`);
+            } else if (error.status === 401 && typeAction === 'Login') {
+                alert('Login failed: Invalid credentials');
+            } else {
+                alert('An unexpected error occurred. Please try again.');
+            }
+            console.error(error); // Log error for debugging
         }
     }
 
@@ -79,12 +110,20 @@ const Login = ({ successLogin, typeAction, close }:
         >
             <Box sx={style}>
                 <form onSubmit={handleSubmitLogin}>
-                    <TextField label='name'
+                    <TextField label='Name'
                         inputRef={nameRef}
                         fullWidth
                         sx={{ mb: 2 }} />
-                    <TextField label='password'
+                        {typeAction==='Sign'&&(
+                            <TextField label='Email'
+                            inputRef={emailRef}
+                            type="email"
+                            fullWidth
+                            sx={{ mb: 2 }} />
+                        )}
+                    <TextField label='Password'
                         inputRef={passwordRef}
+                        type="password"
                         fullWidth
                         sx={{ mb: 2 }} />
 

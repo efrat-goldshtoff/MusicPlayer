@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import Login from "../Login/Login";
 import AvatarUser from "../Login/AvatarUser";
+import { UserContext } from "../Login/UserContext";
 
 // const style = {
 //     border: '1px solid purple',
@@ -9,16 +10,18 @@ import AvatarUser from "../Login/AvatarUser";
 // }
 
 const HomePage = () => {
+    const context = useContext(UserContext);
     const [isLogin, setIsLogin] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [myType, setMyType] = useState('Login');
 
+    useEffect(() => {
+        setIsLogin(!!context?.user.id);
+    }, [context?.user.id])
+
     const handleLoginSuccessful = () => {
-        setIsLogin((now1) => {
-            if (!now1)
-                setIsOpen(false);
-            return !now1;
-        })
+        setIsOpen(false);
+        setIsLogin(true);
     }
 
     return (<>

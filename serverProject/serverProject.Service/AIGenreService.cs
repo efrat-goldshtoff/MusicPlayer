@@ -5,22 +5,24 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+//using Microsoft.Extensions.Configuration;
 using serverProject.Core.Services;
 
 namespace serverProject.Service
 {
-    public class AIGenreService:IAIGenreService
+    public class AIGenreService : IAIGenreService
     {
         private readonly HttpClient _httpClient;
         private readonly string _openAiApiKey; // Or other AI service key
         private readonly string _openAiEndpoint; // Or other AI service endpoint
 
-        public AIGenreService(HttpClient httpClient, IConfiguration configuration)
+        public AIGenreService(HttpClient httpClient
+            //, IConfiguration configuration
+            )
         {
             _httpClient = httpClient;
-            _openAiApiKey = configuration["OpenAI:ApiKey"]; // Configure in appsettings.json
-            _openAiEndpoint = configuration["OpenAI:Endpoint"] ?? "https://api.openai.com/v1/chat/completions";
+            _openAiApiKey = Environment.GetEnvironmentVariable("OpenAI__ApiKey"); 
+            _openAiEndpoint = Environment.GetEnvironmentVariable("OpenAI__Endpoint") ?? "https://api.openai.com/v1/chat/completions";
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_openAiApiKey}");
         }
         public async Task<List<string>> GetGenresFromTextAsync(string text)
@@ -31,7 +33,9 @@ namespace serverProject.Service
                 model = "gpt-3.5-turbo", // or another suitable model
                 messages = new[]
                 {
-                    new { role = "system", content = "You are a music genre classifier. Extract relevant music genres from the given text. Return a comma-separated list of genres, or 'unknown' if no clear genre is identified." },
+                    new { role = "system", content = "You are a music genre classifier." +
+                    " Extract relevant music genres from the given text." +
+                    " Return a comma-separated list of genres, or 'unknown' if no clear genre is identified." },
                     new { role = "user", content = $"Text: \"{text}\"" }
                 }
             };

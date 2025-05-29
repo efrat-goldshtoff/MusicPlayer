@@ -19,33 +19,33 @@ namespace serverProject.Data.Repositories
         }
         public async Task<IEnumerable<PlayList>> GetAllAsync()
         {
-            return await _context.playLists.Include(p => p.songs).Include(p => p.User).ToListAsync();
+            return await _context.PlayLists.Include(p => p.Songs).Include(p => p.User).ToListAsync();
         }
 
         public async Task<PlayList> GetByIdAsync(int id)
         {
-            return await _context.playLists.Include(p => p.songs).FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.PlayLists.Include(p => p.Songs).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<PlayList>> GetPlaylistsByUserIdAsync(int userId)
         {
-            return await _context.playLists
+            return await _context.PlayLists
                 .Where(p => p.UserId == userId)
-                .Include(p => p.songs)
+                .Include(p => p.Songs)
                     .ThenInclude(s => s.Singer) // Include singer details for songs in playlist
                 .ToListAsync();
         }
 
         public async Task<PlayList> AddAsync(PlayList playlist)
         {
-            await _context.playLists.AddAsync(playlist);
+            await _context.PlayLists.AddAsync(playlist);
             await _context.SaveChangesAsync();
             return playlist;
         }
 
         public async Task<PlayList> UpdateAsync(int id, PlayList playlist)
         {
-            var existingPlaylist = await _context.playLists.FindAsync(id);
+            var existingPlaylist = await _context.PlayLists.FindAsync(id);
             if (existingPlaylist == null)
                 return null;
 
@@ -61,34 +61,34 @@ namespace serverProject.Data.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            var playlist = await _context.playLists.FindAsync(id);
+            var playlist = await _context.PlayLists.FindAsync(id);
             if (playlist != null)
             {
-                _context.playLists.Remove(playlist);
+                _context.PlayLists.Remove(playlist);
                 await _context.SaveChangesAsync();
             }
         }
 
         public async Task AddSongToPlaylistAsync(int playlistId, int songId)
         {
-            var playlist = await _context.playLists.Include(p => p.songs).FirstOrDefaultAsync(p => p.Id == playlistId);
-            var song = await _context.songs.FindAsync(songId);
+            var playlist = await _context.PlayLists.Include(p => p.Songs).FirstOrDefaultAsync(p => p.Id == playlistId);
+            var song = await _context.Songs.FindAsync(songId);
 
-            if (playlist != null && song != null && !playlist.songs.Contains(song))
+            if (playlist != null && song != null && !playlist.Songs.Contains(song))
             {
-                playlist.songs.Add(song);
+                playlist.Songs.Add(song);
                 await _context.SaveChangesAsync();
             }
         }
 
         public async Task RemoveSongFromPlaylistAsync(int playlistId, int songId)
         {
-            var playlist = await _context.playLists.Include(p => p.songs).FirstOrDefaultAsync(p => p.Id == playlistId);
-            var songToRemove = playlist?.songs.FirstOrDefault(s => s.Id == songId);
+            var playlist = await _context.PlayLists.Include(p => p.Songs).FirstOrDefaultAsync(p => p.Id == playlistId);
+            var songToRemove = playlist?.Songs.FirstOrDefault(s => s.Id == songId);
 
             if (playlist != null && songToRemove != null)
             {
-                playlist.songs.Remove(songToRemove);
+                playlist.Songs.Remove(songToRemove);
                 await _context.SaveChangesAsync();
             }
         }

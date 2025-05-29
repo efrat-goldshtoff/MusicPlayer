@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ApiClient, Song } from "../../api/client"
 import { Box } from "@mui/material";
 import Music from "./Music";
@@ -8,22 +8,44 @@ import FilterSongs from "./FilterSongs";
 
 const SongsPage = () => {
     const [songs, setSongs] = useState<Song[]>([]);
-    const [filteredS, setFilteredS] = useState<Song[]>([]);
-    const [current, setCurrent] = useState<string | null>(null);
+    const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
+    const [currentPlayingSongLink, setCurrentPlayingSongLink] = useState<string | null>(null);
+    const apiClient = new ApiClient("http://localhost:5048");
+
+    const fetchAllSongs = useCallback(async () => {
+        try {
+            const fetchedSongs = await apiClient.songAll();
+            setSongs(fetchedSongs);
+            setFilteredSongs(fetchedSongs);
+        } catch (error) {
+            console.error("Failed to fetch songs:", error);
+        }
+    }, [apiClient]);
 
     useEffect(() => {
-        const apiClient = new ApiClient("http://localhost:5048");
-        apiClient.songAll().then(setSongs);
-    }, []);
+        fetchAllSongs();
+        // apiClient.songAll().then(setSongs);
+    }, [fetchAllSongs]);
 
-    const filterS = (singer: string, genre: string) => {
-        let filtered = songs;
-        if (singer)
-            filtered = filtered.filter(song => song.singer?.name === singer);
-        if (genre)
-            filtered = filtered.filter(song => song.genre == genre);
-        console.log(filtered);
-        setFilteredS(filtered);
+    const filterSongs = async (singerName: string, genreQuery: string) => {
+        let tempFiltered: Song[] = songs;
+        if (singerName) {
+            tempFiltered = tempFiltered.filter(song =>
+                song.singer?.name?.toLowerCase().includes(singerName.toLowerCase())
+            );
+        }
+        if (genreQuery) {
+            try {
+                const aiFiltered = await apiClient.searchByAI(genreQuery);
+                tempFiltered = tempFiltered.filter(s => aiFiltered.some(aiS => aiS.id === s.id));
+            } catch (error) {
+                console.error("AI genre search failed, falling back to exact match:", error);
+                tempFiltered = tempFiltered.filter(song =>
+                    song.genre?.toLowerCase().includes(genreQuery.toLowerCase())
+                );
+            }
+        }
+        setFilteredSongs(tempFiltered);
     }
     return (<>
         <h2 style={{ marginBottom: '0px', color: 'purple' }}>
@@ -32,14 +54,15 @@ const SongsPage = () => {
             <MusicNoteRounded sx={{ color: 'purple' }} />
         </h2>
         <Box>
-            <FilterSongs onFilter={filterS} />
+            <FilterSongs onFilter={filterSongs} />
             <AllSongs
-                songs={filteredS.length > 0 ?
-                    filteredS :
+                songs={filteredSongs.length > 0 ?
+                    filteredSongs :
                     songs}
-                onPlay={setCurrent}
+                onPlay={setCurrentPlayingSongLink}
             />
-            <Music link={current!} />
+            {currentPlayingSongLink &&
+                <Music link={currentPlayingSongLink} />}
             {/* {current &&  <Music link={current} /> }  */}
         </Box>
     </>)

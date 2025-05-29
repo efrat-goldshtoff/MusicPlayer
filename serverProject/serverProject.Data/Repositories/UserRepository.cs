@@ -19,36 +19,36 @@ namespace serverProject.Data.Repositories
 
         public async Task<IEnumerable<User>> GetAllasync()
         {
-            return await _context.users.Include(u => u.songs).Include(u => u.PlayLists).ToListAsync();
+            return await _context.Users.Include(u => u.songs).Include(u => u.PlayLists).ToListAsync();
             //return await _context.users.Include(u => u.songs).ToListAsync();
         }
 
         public async Task<User> GetByIdAsync(int id)
         {
-            return await _context.users.Include(u => u.songs).Include(u => u.PlayLists).FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.Include(u => u.songs).Include(u => u.PlayLists).FirstOrDefaultAsync(u => u.Id == id);
             //return await _context.users.FindAsync(id);
         }
 
         public async Task<User> GetUserByNameAsync(string name)
         {
-            return await _context.users.FirstOrDefaultAsync(u => u.Name == name);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
         }
 
         public async Task<User> GEtByEmailAsync(string email)
         {
-            return await _context.users.FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<User> AddAsync(User user)
         {
-            await _context.users.AddAsync(user);
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
         }
 
         public async Task<User> UpdateAsync(int id, User user)
         {
-            User u = await _context.users.SingleOrDefaultAsync(a => a.Id == id);
+            User u = await _context.Users.SingleOrDefaultAsync(a => a.Id == id);
             if (u == null)
                 return null;
             else
@@ -65,21 +65,21 @@ namespace serverProject.Data.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            var user = await _context.users.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
-                _context.users.Remove(user);
+                _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
             }
         }
         public User GetUserByCredentials(string name, string password)
         {
-            return _context.users.FirstOrDefault(user => user.Name == name && user.Password == password);
+            return _context.Users.FirstOrDefault(user => user.Name == name && user.Password == password);
         }
 
         public Task<User> GetByEmailAsync(string email)
         {
-            return _context.users.FirstOrDefaultAsync(user => user.Email == email);
+            return _context.Users.FirstOrDefaultAsync(user => user.Email == email);
         }
     }
 }

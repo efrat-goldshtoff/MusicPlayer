@@ -2,28 +2,36 @@
 using System.Diagnostics;
 using serverProject.Core.models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace serverProject.Data
 {
     public class DataContext : DbContext
     {
-        public DbSet<Song> songs { get; set; }
-        public DbSet<User> users { get; set; }
-        public DbSet<Singer> singers { get; set; }
-        public DbSet<PlayList> playLists { get; set; }
-        //public DataContext(DbContextOptions<DataContext> options) : base(options)
-        //{
-        //}
+        private readonly IConfiguration _configuration; // Add IConfiguration
+
+        public DbSet<Song> Songs { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Singer> Singers { get; set; }
+        public DbSet<PlayList> PlayLists { get; set; }
+        public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration) : base(options)
+        {
+            _configuration = configuration;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=my_db");
-            //optionsBuilder.LogTo(msg => Console.WriteLine(msg));
+            optionsBuilder.UseMySql(_configuration.GetConnectionString("DefaultConnection"),
+                            ServerVersion.AutoDetect(_configuration.GetConnectionString("DefaultConnection")));
         }
+
+        // ... OnModelCreating (keep as is, with PlayList and User configurations)
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure many-to-many relationship between Song and PlayList
             modelBuilder.Entity<PlayList>()
-                .HasMany(p => p.songs)
+                .HasMany(p => p.Songs)
                 .WithMany(s => s.PlayLists);
             // Optional: Configure User-PlayList one-to-many relationship explicitly
             modelBuilder.Entity<PlayList>()
@@ -37,8 +45,8 @@ namespace serverProject.Data
                 .HasIndex(u => u.Name)
                 .IsUnique();
             modelBuilder.Entity<User>()
-    .HasIndex(u => u.Email)
-    .IsUnique();
+        .HasIndex(u => u.Email)
+        .IsUnique();
 
             // Seed initial data (optional but good for testing)
             modelBuilder.Entity<User>().HasData(
@@ -50,3 +58,4 @@ namespace serverProject.Data
 
     }
 }
+
