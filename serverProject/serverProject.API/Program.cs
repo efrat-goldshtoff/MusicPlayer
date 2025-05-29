@@ -43,6 +43,13 @@ builder.Services.AddScoped<IPlayListRepository, PlayListRepository>();
 
 builder.Services.AddDbContext<DataContext>();
 
+builder.Services.AddHttpClient<IAIGenreService, AIGenreService>(); // Register HttpClient
+builder.Services.AddScoped<IAIGenreService, AIGenreService>(); // Register the service
+
+// Add OpenAI configuration
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+
 //builder.Services.AddDbContext<DataContext>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

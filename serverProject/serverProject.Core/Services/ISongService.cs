@@ -12,6 +12,7 @@ namespace serverProject.Core.Services
     {
         public Task<IEnumerable<Song>> GetAllAsync();
         public Task<Song> GetByIdAsync(int id);
+        public Task<IEnumerable<Song>> SearchSongsByAIAsync(string query);
         public Task<Song> AddAsync(SongDto song);
         public Task<Song> UpdateAsync(int id, SongDto song);
         public Task DeleteAsync(int id);

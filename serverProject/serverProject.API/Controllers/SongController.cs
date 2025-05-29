@@ -51,10 +51,16 @@ namespace serverProject.API.Controllers
         [HttpGet("searchByAI")]
         public async Task<ActionResult<IEnumerable<Song>>> SearchSongsByAI([FromQuery] string query)
         {
-            // This will call an AI service to get relevant genres/keywords
-            // and then filter songs based on those.
-            // For now, it will be a placeholder.
-            return Ok(await _songService.GetAllAsync()); // Placeholder
+            if (string.IsNullOrEmpty(query))
+            {
+                return BadRequest("Search query cannot be empty.");
+            }
+            var songs = await _songService.SearchSongsByAIAsync(query);
+            if (songs == null || !songs.Any())
+            {
+                return NotFound("No songs found for the given AI query.");
+            }
+            return Ok(songs);
         }
 
         [Authorize(Roles = "Admin")]
