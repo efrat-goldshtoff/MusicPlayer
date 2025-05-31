@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ApiClient, Singer, Song } from "../../api/client"
+import { ApiClient, Song } from "../../api/client"
 import { Box } from "@mui/material";
 import Music from "./Music";
 import AllSongs from "./AllSongs";
@@ -11,7 +11,6 @@ const SongsPage = () => {
     const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
     const [currentPlayingSongLink, setCurrentPlayingSongLink] = useState<string | null>(null);
     const apiClient = new ApiClient("http://localhost:5048");
-    const [singers, setSingers] = useState<Singer[]>([]);
     const fetchAllSongs = async () => {
         try {
             const fetchedSongs = await apiClient.songAll();
@@ -25,7 +24,6 @@ const SongsPage = () => {
     useEffect(() => {
         fetchAllSongs();
         apiClient.songAll().then(setSongs);
-        // apiClient.singerAll().then(setSingers);
     }, [fetchAllSongs]);
 
     const filterSongs = async (singerName: string, genreQuery: string) => {
@@ -54,7 +52,6 @@ const SongsPage = () => {
             Play Me
             <MusicNoteRounded sx={{ color: 'purple' }} />
         </h2>
-        {/* {singers[0]} */}
         <Box>
             <FilterSongs onFilter={filterSongs} />
             <AllSongs
@@ -65,7 +62,6 @@ const SongsPage = () => {
             />
             {currentPlayingSongLink &&
                 <Music link={currentPlayingSongLink} />}
-            {/* {current &&  <Music link={current} /> }  */}
         </Box>
     </>)
 }

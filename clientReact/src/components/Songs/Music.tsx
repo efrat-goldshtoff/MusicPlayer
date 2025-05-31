@@ -13,15 +13,6 @@ const Music = ({ link }: { link: string }) => {
             </h3>
             <audio controls src={link} autoPlay style={{ width: '100%', borderRadius: '8px' }} />
         </Box>
-
-        {/* <Box>
-            <h3 style={{ color: 'purple' }}>
-                <MusicNoteRounded sx={{ color: 'purple' }} />
-                Playing now
-                <MusicNoteRounded sx={{ color: 'purple' }} />
-            </h3>
-            <audio controls src={link} autoPlay />
-        </Box> */}
     </>)
 }
 export default Music;

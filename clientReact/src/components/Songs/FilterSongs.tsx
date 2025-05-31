@@ -55,45 +55,6 @@ const FilterSongs = ({ onFilter }: { onFilter: Function }) => {
                 </CardContent>
             </Card>
         </Box>
-        {/* <Box
-            sx={{
-                marginBottom: '4px'
-            }}>
-            <Card
-                sx={{
-                    maxHeight: '180px'
-                }}>
-                <CardContent>
-                    <TextField fullWidth
-                        label="Search by singer"
-                        inputRef={singerRef}
-                        sx={{
-                            marginBottom: '6px'
-                        }}
-                    />
-                    <TextField fullWidth
-                        label="Search by genre"
-                        inputRef={genreRef}
-                    />
-                    <div></div>
-                    <Button
-                        sx={{
-                            color: 'purple',
-                            border: '1px solid purple'
-                        }}
-                        type="submit"
-                        onClick={() =>
-                            onFilter(
-                                singerRef.current?.value ?? '',
-                                genreRef.current?.value ?? ''
-                            )
-                        }
-                    >
-                        Search 🔎
-                    </Button>
-                </CardContent>
-            </Card>
-        </Box> */}
     </>)
 }
 export default FilterSongs;

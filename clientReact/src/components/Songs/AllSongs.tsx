@@ -51,7 +51,7 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
                                 Play <PlayArrow />
                             </Button>
                             <a href={song.link} download={song.name
-                                //  + '.mp3'
+                                 + '.mp3'
                                  }>
                                 <Button
                                     sx={{

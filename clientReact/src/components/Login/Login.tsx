@@ -48,12 +48,6 @@ const Login = ({ successLogin, typeAction, close }:
                     }
                 });
                 localStorage.setItem('token', result.token);
-                // if (!result || !result.token || !result.message) {
-                //     console.error("Missing Token or Message ", result);
-                // }
-                // else {
-                //     console.log('Registered success ', result);
-                // }
             }
             else {
                 const loginM = new LoginM();
@@ -75,20 +69,7 @@ const Login = ({ successLogin, typeAction, close }:
             }
             setOpen(false);
             successLogin();
-            // if (result && (result.token || result.message)) {
-            //     context?.userDispatch({
-            //         type: 'CREATE',
-            //         data: {
-            //             id: nameRef.current?.value || '',
-            //             firstName: nameRef.current?.value || '',
-            //             password: passwordRef.current?.value || ''
-            //         }
-            //     });
-            //     setOpen(false);
-            //     successLogin();
-            // } else {
-            //     alert('Something wrong, Please try again');
-            // }
+           
         } catch (error: any) {
             if (error.status === 400 && typeAction === 'Sign') {
                 alert(`Registration failed: ${error.result}`);

@@ -20,7 +20,6 @@ const HomePage = () => {
     }
 
     return (<>
-
         {!isLogin && (
             <Paper
                 elevation={3}
@@ -60,41 +59,6 @@ const HomePage = () => {
                 close={() => setIsOpen(false)}
             />}
         {isLogin && <AvatarUser />}
-
-        {/* {!isLogin && (
-            <Box
-                sx={{
-                    position: "absolute",
-                    top: 10,
-                    left: 10,
-                    display: "flex",
-                    gap: 2
-                }}>
-                <Button
-                    sx={style}
-                    onClick={() => {
-                        setIsOpen(true);
-                        setMyType('Sign');
-                    }}>
-                    Sign
-                </Button>
-                <Button
-                    sx={style}
-                    onClick={() => {
-                        setIsOpen(true);
-                        setMyType('Login');
-                    }}>
-                    Login
-                </Button>
-            </Box>
-        )}
-        {isOpen &&
-            <Login
-                successLogin={handleLoginSuccessful}
-                typeAction={myType}
-                close={() => setIsOpen(false)}
-            />}
-        {isLogin && <AvatarUser />} */}
     </>)
 }
 export default HomePage;
