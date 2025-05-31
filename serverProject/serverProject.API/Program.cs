@@ -11,13 +11,11 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Amazon.S3;
-using System.Runtime;
-using System;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure; // Add this
-
+//using System.Runtime;
+//using System;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddCors(options =>
 {
@@ -31,6 +29,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<AuthService>();
 
 
 builder.Services.AddScoped<ISingerService, SingerService>();

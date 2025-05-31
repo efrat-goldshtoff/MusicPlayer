@@ -1,0 +1,24 @@
+<div class="add-song-container">
+  <h2>הוסף שיר חדש</h2>
+
+  <form (ngSubmit)="onSubmit()" 
+  #songForm="ngForm" 
+  class="song-form">
+    <div class="form-group">
+      <label for="title">שם השיר:</label>
+      <!-- <input type="text" id="title" name="title" [(ngModel)]="newSong.name" required> -->
+    </div>
+
+  
+
+    <button type="submit" [disabled]="!songForm.form.valid" class="submit-button">הוסף שיר</button>
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>

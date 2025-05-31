@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react"
-import { ApiClient, Song } from "../../api/client"
+import { useEffect, useState } from "react"
+import { ApiClient, Singer, Song } from "../../api/client"
 import { Box } from "@mui/material";
 import Music from "./Music";
 import AllSongs from "./AllSongs";
@@ -11,8 +11,8 @@ const SongsPage = () => {
     const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
     const [currentPlayingSongLink, setCurrentPlayingSongLink] = useState<string | null>(null);
     const apiClient = new ApiClient("http://localhost:5048");
-
-    const fetchAllSongs = useCallback(async () => {
+    const [singers, setSingers] = useState<Singer[]>([]);
+    const fetchAllSongs = async () => {
         try {
             const fetchedSongs = await apiClient.songAll();
             setSongs(fetchedSongs);
@@ -20,11 +20,12 @@ const SongsPage = () => {
         } catch (error) {
             console.error("Failed to fetch songs:", error);
         }
-    }, [apiClient]);
+    };
 
     useEffect(() => {
         fetchAllSongs();
-        // apiClient.songAll().then(setSongs);
+        apiClient.songAll().then(setSongs);
+        // apiClient.singerAll().then(setSingers);
     }, [fetchAllSongs]);
 
     const filterSongs = async (singerName: string, genreQuery: string) => {
@@ -53,6 +54,7 @@ const SongsPage = () => {
             Play Me
             <MusicNoteRounded sx={{ color: 'purple' }} />
         </h2>
+        {/* {singers[0]} */}
         <Box>
             <FilterSongs onFilter={filterSongs} />
             <AllSongs

@@ -1,0 +1,22 @@
+<div class="song-list-container">
+  <h2>רשימת השירים</h2>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="songs.length === 0 && !errorMessage" class="no-songs-message">
+    אין שירים להצגה כרגע.
+  </div>
+
+  <ul class="song-list" *ngIf="songs.length > 0">
+    <li *ngFor="let song of songs" class="song-item">
+      <div class="song-details">
+        <span class="song-title">{{ song.title }}</span> -
+        <span class="song-artist">{{ song.artist }}</span>
+        <span *ngIf="song.album"> ({{ song.album }})</span>
+      </div>
+      <button (click)="playSong(song)" class="play-button">נגן</button>
+    </li>
+  </ul>
+</div>

@@ -65,7 +65,7 @@ namespace serverProject.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SongUser",
+                name: "UserSongs",
                 columns: table => new
                 {
                     songsId = table.Column<int>(type: "int", nullable: false),
@@ -73,15 +73,15 @@ namespace serverProject.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SongUser", x => new { x.songsId, x.usersId });
+                    table.PrimaryKey("PK_UserSongs", x => new { x.songsId, x.usersId });
                     table.ForeignKey(
-                        name: "FK_SongUser_songs_songsId",
+                        name: "FK_UserSongs_songs_songsId",
                         column: x => x.songsId,
                         principalTable: "songs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SongUser_users_usersId",
+                        name: "FK_UserSongs_users_usersId",
                         column: x => x.usersId,
                         principalTable: "users",
                         principalColumn: "Id",
@@ -94,8 +94,8 @@ namespace serverProject.Data.Migrations
                 column: "SingerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SongUser_usersId",
-                table: "SongUser",
+                name: "IX_UserSongs_usersId",
+                table: "UserSongs",
                 column: "usersId");
         }
 
@@ -103,7 +103,7 @@ namespace serverProject.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SongUser");
+                name: "UserSongs");
 
             migrationBuilder.DropTable(
                 name: "songs");

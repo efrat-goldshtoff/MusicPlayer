@@ -50,7 +50,9 @@ const AllSongs = ({ songs, onPlay }: { songs: Song[], onPlay: (link: string) => 
                                 onClick={() => onPlay(song?.link ?? "no link")}>
                                 Play <PlayArrow />
                             </Button>
-                            <a href={song.link} download={song.name + '.mp3'}>
+                            <a href={song.link} download={song.name
+                                //  + '.mp3'
+                                 }>
                                 <Button
                                     sx={{
                                         color: 'purple',

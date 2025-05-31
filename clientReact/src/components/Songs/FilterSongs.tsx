@@ -49,7 +49,7 @@ const FilterSongs = ({ onFilter }: { onFilter: Function }) => {
                                 }
                             >
                                 Search
-                            </Button>
+                            </Button>  
                         </Grid>
                     </Grid>
                 </CardContent>
