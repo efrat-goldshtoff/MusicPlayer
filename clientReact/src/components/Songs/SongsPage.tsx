@@ -10,7 +10,7 @@ const SongsPage = () => {
     const [songs, setSongs] = useState<Song[]>([]);
     const [filteredSongs, setFilteredSongs] = useState<Song[]>([]);
     const [currentPlayingSongLink, setCurrentPlayingSongLink] = useState<string | null>(null);
-    const apiClient = new ApiClient("http://localhost:5048");
+    const apiClient = new ApiClient("https://coursesangularserver.onrender.com/");
     const fetchAllSongs = async () => {
         try {
             const fetchedSongs = await apiClient.songAll();

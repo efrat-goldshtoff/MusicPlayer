@@ -26,7 +26,7 @@ const Login = ({ successLogin, typeAction, close }:
 
     const handleSubmitLogin = async (e: FormEvent) => {
         e.preventDefault();
-        const apiClient = new ApiClient("http://localhost:5048");
+        const apiClient = new ApiClient("https://coursesangularserver.onrender.com/");
         try {
             let result: any;
             if (typeAction === 'Sign') {

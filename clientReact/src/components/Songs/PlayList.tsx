@@ -23,7 +23,7 @@ const PlayList = () => {
     const [selectedSongToAdd, setSelectedSongToAdd] = useState<number | ''>('');
     const [error, setError] = useState('');
 
-    const apiClient = new ApiClient("http://localhost:5048");
+    const apiClient = new ApiClient("https://coursesangularserver.onrender.com/");
 
     const fetchPlaylists = async () => {
         if (!currentUserId) return;

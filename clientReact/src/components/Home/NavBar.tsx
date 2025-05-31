@@ -28,7 +28,7 @@ const NavBar = () => {
                             My Songs
                         </Button>
                     )}
-                    {isUserLoggedIn && (
+                    {/* {isUserLoggedIn && ( */}
                         <Button
                             component={Link}
                             to='/playList'
@@ -37,8 +37,8 @@ const NavBar = () => {
                         >
                             PlayList
                         </Button>
-                    )}
-                    {isUserLoggedIn && (
+                    {/* )} */}
+                    {/* {isUserLoggedIn && ( */}
                         <Button
                             color="secondary"
                             variant="text"
@@ -50,7 +50,7 @@ const NavBar = () => {
                         >
                             Logout
                         </Button>
-                    )}
+                    {/* )} */}
                 </Box>
             </Toolbar>
         </AppBar>
